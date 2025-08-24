@@ -1,0 +1,7 @@
+# Yo-Kai Medals Bot URLs configuration
+
+addbot_url: "http://t.me/YoKaiMedals_bot?startgroup"
+guide_url: "https://docs.google.com/spreadsheets/d/1CkHMoVdggVKFHQk7q7py-AmZ-gww2mi8PNynAdahnlI/edit?usp=sharing"
+credits_url: "https://telegra.ph/YoKaiMedals-Credits-06-22"
+support_url: "https://t.me/YoKaiMedalsSupport_bot"
+channel_url: "http://t.me/YoKaiMedalsChannel"

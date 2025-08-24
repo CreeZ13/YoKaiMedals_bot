@@ -1,0 +1,47 @@
+# test        6318329597:AAGQbJs2F8EG7BstFxEvSULKwyBNJ5Q_wFo
+# official    6211114639:AAFF8_UW8zRAK1T165e573OIpdD0HxwXe7w
+token: "6318329597:AAGQbJs2F8EG7BstFxEvSULKwyBNJ5Q_wFo" 
+
+nyokai: 753
+yokai_perpage_in_medallium: 10
+
+failbefriend:
+  mess:
+    min: 16
+    max: 32
+  cmd:
+    min: 5
+    max: 10
+
+spawnranges:
+  fast:
+    min: 25
+    max: 45
+  medium:
+    min: 45
+    max: 65
+  slow:
+    min: 65
+    max: 85   
+
+rank-kai:
+  e: 5
+  d: 6
+  c: 7
+  b: 8
+  a: 9
+  s: 10
+
+spawn-probabilities:    # in % la somma deve essere 100
+  e: 28
+  d: 23
+  c: 18
+  b: 15
+  a: 10
+  s: 6
+
+coin-cost:
+  tribes: 25
+  onestar: 30
+  fivestar-special: 40
+
