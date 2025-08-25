@@ -1,8 +1,13 @@
 # TESTI SOLO IN INGLESE (Anche se per convenzione le traduzioni ce le ho messe) #
 
 startprivate:
-  en: "<i>A Yo-Kai Watch medallium simulator. Catch as many yo kai as possible in groups!\nAdd me in your group or type /help to see the guide</i>"
-  it: "<i>Un simulatore del Medaglione Yo-Kai. Cattura quanti più yokai possibile nei gruppi!\nAggiungimi in un gruppo oppure scrivi /help per vedere la guida</i>"
+  en: |
+    "<i>A Yo-Kai Watch medallium simulator. Catch as many yo kai as possible in groups!
+    Add me in your group or type /help to see the guide</i>"
+  
+  it: |
+    "<i>Un simulatore del Medaglione Yo-Kai. Cattura quanti più yokai possibile nei gruppi!
+    Aggiungimi in un gruppo oppure scrivi /help per vedere la guida</i>"
 
 onlyingroups:
   en: "<i>You can use this command only in groups</i>"
@@ -114,8 +119,17 @@ no_leaderboard:
 
 
 showcrankakai:
-  "en": "<i><b>🎰 CRANK-A-KAI </b></i>\n<i>Tribes Coins:  <b>25 Kai</b>\n1 Star Coin:  <b>30 Kai</b>\n5 Star and Special Coins:  <b>40 Kai</b></i>"
-  "it": "<i><b>🎰 SLOT-KAI </b></i>\n<i>Monete tribù:  <b>25 Kai</b>\nMoneta 1 stella:  <b>30 Kai</b>\nMoneta 5 stelle e Speciale:  <b>40 Kai</b></i>"
+  "en": |
+    "<i><b>🎰 CRANK-A-KAI </b></i>
+    <i>Tribes Coins:  <b>25 Kai</b>
+    1 Star Coin:  <b>30 Kai</b>
+    5 Star and Special Coins:  <b>40 Kai</b></i>"
+  
+  "it": |
+    "<i><b>🎰 SLOT-KAI </b></i>
+    <i>Monete tribù:  <b>25 Kai</b>
+    Moneta 1 stella:  <b>30 Kai</b>
+    Moneta 5 stelle e Speciale:  <b>40 Kai</b></i>"
 
 crankakaiprize:
   "en": 
@@ -137,9 +151,33 @@ showinventory:
     - " | <i>Inventario 💼</i>"
     - "<i>Kai-Dollari:</i>"
 
-showguide:
-  "en": "<b>📋 YoKaiMedals Commands </b>\n__________________________________\n/medallium - <i>See your Yo-Kai collection</i>\n/inventory - <i>See your items and Kai-Dollars</i>\n/friend [yokai] - <i>Get a Yo-Kai when it spawns</i>\n/ykgift [user] [yokai] - <i>Give a Yo-Kai to someone</i>\n/release [yokai] - <i>Release a Yo-Kai from your medallium</i>\n/crankakai - <i>Obtain new Yo-Kai!</i>\n/leaderboard - <i>See the best Yo-Kai hunters</i>\n/language - <i>Change the bot lang</i>\n/spawnrange - <i>Change Yo-Kai spawn range</i>\n/contact - <i>Contact us for support or feedbacks</i>" 
-  "it": "<b>📋 Comandi di YoKaiMedals </b>\n____________________________________\n/medallium - <i>Vedi la tua collezione</i>\n/inventory [yokai] - <i>Vedi i tuoi item e i Kai-Dollari</i>\n/ykgift [user] [yokai] - <i>Regala un tuo Yo-Kai a qualcuno</i>\n/release [yokai] - <i>Rilascia uno Yo-Kai dal tuo medallium</i>\n/slotkai - <i>Ottieni nuovi Yo-Kai!</i>\n/leaderboard - <i>Vedi i migliori cacciatori di Yo-Kai</i>\n/language - <i>Cambia la lingua</i>\n/spawnrange - <i>Cambia il range di spawn degli Yo-Kai</i>\n/contact - <i>Contattaci per supporto o feedbacks</i>"
+showguide: 
+  "en": |
+    "<b>📋 YoKaiMedals Commands </b>
+    __________________________________
+    /medallium - <i>See your Yo-Kai collection</i>
+    /inventory - <i>See your items and Kai earned</i>
+    /friend [yokai] - <i>Get a Yo-Kai when it spawns</i>
+    /ykgift [user] [yokai] - <i>Give a Yo-Kai to someone</i>
+    /release [yokai] - <i>Release a Yo-Kai from your medallium</i>
+    /crankakai - <i>Obtain new Yo-Kai!</i>
+    /leaderboard - <i>See the best Yo-Kai hunters</i>
+
+    /settings - <i>Change langage and spawnrange settings</i>
+    /contact - <i>Contact us for support or feedbacks</i>" 
+
+  "it": |
+    "<b>📋 Comandi di YoKaiMedals </b>
+    ____________________________________
+    /medallium - <i>Vedi la tua collezione</i>
+    /inventory [yokai] - <i>Vedi i tuoi item e i Kai-Dollari</i>
+    /ykgift [user] [yokai] - <i>Regala un tuo Yo-Kai a qualcuno</i>
+    /release [yokai] - <i>Rilascia uno Yo-Kai dal tuo medallium</i>
+    /slotkai - <i>Ottieni nuovi Yo-Kai!</i>
+    /leaderboard - <i>Vedi i migliori cacciatori di Yo-Kai</i>
+
+    /settings - <i>Cambia la lingua e lo spawnrange</i>
+    /contact - <i>Contattaci per supporto o feedbacks</i>"
 
 noperms: 
   "en": "⚠️ You don't have any permissions"
