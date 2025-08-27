@@ -12,7 +12,7 @@ primary_region = "fra"
   YOKAI_JSON_PATH = "/data/yokai_list.json"
 
 [mounts]
-source = "dati_persistenti"
+source = "database_persistente"
 destination = "/data"
 
 [[vm]]
