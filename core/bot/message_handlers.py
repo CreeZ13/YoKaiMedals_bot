@@ -93,7 +93,7 @@ class MessHandlers:
         current_mess_count = self.getData.get_check_mess_data(self.chat_id)["current_mess_count"]
         stop_mess_count = self.getData.get_check_mess_data(self.chat_id)["stop_mess_count"]
 
-        if current_mess_count >= stop_mess_count:
+        if current_mess_count >= stop_mess_count and is_yokai_spawned == "False":
             self.updateData.set_yokai_spawned_true(self.chat_id)
             # Aggiungi info in yokai_spawned_data (or ignore se gia' l'evento e' attivo ed esiste il record)
             yokai_id = self._spawn_yokai_randomly()
