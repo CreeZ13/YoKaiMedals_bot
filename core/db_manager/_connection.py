@@ -4,8 +4,8 @@ import os
 
 class DatabaseConnection:
     def __init__(self):
-        self.db_path = os.path.abspath("data/database.db")
-        self.yokai_json_path = os.path.abspath("data/yokai_list.json")
+        self.db_path = os.getenv("DB_PATH")
+        self.yokai_json_path = os.getenv("YOKAI_JSON_PATH")
         self._conn = None
 
     def connect(self) -> sqlite3.Connection:

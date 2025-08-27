@@ -45,7 +45,7 @@ class AdminCommands:
             f"Azione: {action}\n\n"
             f"-----------------------------------------\n\n"
         )
-        log_path = os.path.abspath("data/admin_actions.log")
+        log_path = os.getenv("LOG_PATH")
         with open(log_path, "a", encoding="utf-8") as log_file:
             log_file.write(log_line)
 

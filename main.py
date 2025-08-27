@@ -3,7 +3,8 @@ from dotenv import load_dotenv
 from core.bot.setup import BotManager
 
 # Carica le variabili d'ambiente dal file .env
-load_dotenv()
+if os.path.exists(".env"):
+    load_dotenv(".env")
 
 # Ottieni il token dal file .env
 BOT_TOKEN = os.getenv('BOT_TOKEN')
