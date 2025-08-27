@@ -1,4 +1,5 @@
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, MessageHandler, filters
+from telegram.error import NetworkError
 
 from config.config import Config
 from core.bot.callbacks_handler import CallbackHandler
@@ -10,8 +11,7 @@ from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandle
 
 
 class BotManager:
-    def __init__(self):
-        TOKEN = Config().get_botConfig("token")
+    def __init__(self, TOKEN):
         self.application = ApplicationBuilder().token(TOKEN).build()
 
     def _setup_handlers(self):
@@ -43,8 +43,9 @@ class BotManager:
         self.application.add_handler(CommandHandler(("leaderboard", "classifica"), leaderboard_cmd.leaderboard))
 
         # Comandi per gli operatori speciali (ykwi)
-        self.application.add_handler(CommandHandler("addkai", admin_cmds.addkai))
+        self.application.add_handler(CommandHandler("addkai", admin_cmds.updatekai))
         self.application.add_handler(CommandHandler("addyokai", admin_cmds.addyokai))
+        self.application.add_handler(CommandHandler("delyokai", admin_cmds.delyokai))
 
         # Callback buttons
         self.application.add_handler(CallbackQueryHandler(callbacks_handler.handle_callbacks))
@@ -55,4 +56,7 @@ class BotManager:
 
     def run(self):
         self._setup_handlers()
-        self.application.run_polling(drop_pending_updates=True)
+        try:
+            self.application.run_polling(drop_pending_updates=True)
+        except NetworkError:
+            pass

@@ -51,13 +51,13 @@ class AdminCommands:
 
 # ------------------------------- #
 
-    async def addkai(self, update: Update, context: CallbackContext):
+    async def updatekai(self, update: Update, context: CallbackContext):
         self._set_context_data(update)
         if not self._is_admin(self.user_id):
             await update.message.reply_text("🚫 Non sei autorizzato.", do_quote=True)
             return  
         if len(context.args) < 2:
-            await update.message.reply_text("Usage: /addkai @username amount", do_quote=True)
+            await update.message.reply_text("Usage: /updatekai @username amount", do_quote=True)
             return
 
         try:
@@ -79,12 +79,12 @@ class AdminCommands:
             print(Exception)
         
         # Comunica in chat e LOGGA l'azione
-        action = f"Kai Aggiunti -> {kai_amount} Kai a @{username}"
+        action = f"Numero Kai Variato -> {kai_amount} Kai a @{username}"
         self._log_admin_action(chat_id=self.chat_id,
                                user_id=self.user_id,
                                action=action)
         await update.message.reply_text(
-            f"✅ Aggiunti {kai_amount} Kai a @{username}", 
+            f"✅ Update Kai di: {kai_amount} Kai a @{username}", 
             parse_mode=ParseMode.HTML
         )
 
@@ -112,17 +112,66 @@ class AdminCommands:
             if not yokai_id:
                 await update.message.reply_text("❌ Yo-kai non trovato.", do_quote=True)
                 return
+            
             # Aggiungi lo yokai al destinatario
             self.writeData.add_yokai_to_user(recipient_id, self.chat_id, yokai_id)
+
         except Exception:
             return
 
         # Comunica in chat e LOGGA l'azione
-        action = f"Yokai Aggiunto -> {yokai_name} a @{username}"
+        action = f"Yokai Aggiunto -> {yokai_name} (id {yokai_id}) a @{username}"
         self._log_admin_action(chat_id=self.chat_id,
                                user_id=self.user_id,
                                action=action)
         await update.message.reply_text(
             f"✅ Aggiunto Yo-kai <b>{yokai_name.capitalize()}</b> a @{username}", 
+            parse_mode=ParseMode.HTML
+        )  
+
+# ------------------------------- #
+
+    async def delyokai(self, update: Update, context: CallbackContext):
+        self._set_context_data(update)
+        if not self._is_admin(self.user_id):
+            await update.message.reply_text("🚫 Non sei autorizzato.", do_quote=True)
+            return
+        if len(context.args) < 2:
+            await update.message.reply_text("Usage: /delyokai @username NomeYokai", do_quote=True)
+            return
+
+        try:
+            username = context.args[0].lstrip("@")
+            yokai_name = " ".join(context.args[1:]).lower()  # prende tutto il resto come nome
+            recipient_id = self.getData.get_user_id_from_username(username)
+            if not recipient_id:
+                await update.message.reply_text("❌ Utente non trovato.", do_quote=True)
+                return
+
+            # Recupera yokai_id dal nome
+            yokai_id = self.getData.get_yokai_id_from_name(yokai_name)
+            if not yokai_id:
+                await update.message.reply_text("❌ Yo-kai non trovato.", do_quote=True)
+                return
+            
+            # Controlla se lo yokai e' posseduto dal destinatario
+            owned_yokai_ids = self.getData.get_yokai_ids_collected(recipient_id, self.chat_id)
+            if yokai_id not in owned_yokai_ids: 
+                await update.message.reply_text("❌ Il destinatario non possiede lo yokai.", do_quote=True)
+                return
+
+            # Rimuovi lo yokai al destinatario
+            self.writeData.remove_yokai_from_user(recipient_id, self.chat_id, yokai_id)
+
+        except Exception:
+            return
+
+        # Comunica in chat e LOGGA l'azione
+        action = f"Yokai Rimosso -> {yokai_name} (id {yokai_id}) a @{username}"
+        self._log_admin_action(chat_id=self.chat_id,
+                               user_id=self.user_id,
+                               action=action)
+        await update.message.reply_text(
+            f"✅ Rimosso Yo-kai <b>{yokai_name.capitalize()}</b> a @{username}", 
             parse_mode=ParseMode.HTML
         )  

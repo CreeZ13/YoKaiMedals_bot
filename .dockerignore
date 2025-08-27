@@ -1,0 +1,8 @@
+_backups
+__pycache__
+.env
+.venv
+.git
+*.pyc
+*.pyo
+*.pyd

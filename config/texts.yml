@@ -2,12 +2,12 @@
 
 startprivate:
   en: |
-    "<i>A Yo-Kai Watch medallium simulator. Catch as many yo kai as possible in groups!
-    Add me in your group or type /help to see the guide</i>"
+    <i>A Yo-Kai Watch medallium simulator. Catch as many yo kai as possible in groups!
+    Add me in your group or type /help to see the guide</i>
   
   it: |
-    "<i>Un simulatore del Medaglione Yo-Kai. Cattura quanti più yokai possibile nei gruppi!
-    Aggiungimi in un gruppo oppure scrivi /help per vedere la guida</i>"
+    <i>Un simulatore del Medaglione Yo-Kai. Cattura quanti più yokai possibile nei gruppi!
+    Aggiungimi in un gruppo oppure scrivi /help per vedere la guida</i>
 
 onlyingroups:
   en: "<i>You can use this command only in groups</i>"
@@ -120,16 +120,16 @@ no_leaderboard:
 
 showcrankakai:
   "en": |
-    "<i><b>🎰 CRANK-A-KAI </b></i>
+    <i><b>🎰 CRANK-A-KAI </b></i>
     <i>Tribes Coins:  <b>25 Kai</b>
     1 Star Coin:  <b>30 Kai</b>
-    5 Star and Special Coins:  <b>40 Kai</b></i>"
+    5 Star and Special Coins:  <b>40 Kai</b></i>
   
   "it": |
-    "<i><b>🎰 SLOT-KAI </b></i>
+    <i><b>🎰 SLOT-KAI </b></i>
     <i>Monete tribù:  <b>25 Kai</b>
     Moneta 1 stella:  <b>30 Kai</b>
-    Moneta 5 stelle e Speciale:  <b>40 Kai</b></i>"
+    Moneta 5 stelle e Speciale:  <b>40 Kai</b></i>
 
 crankakaiprize:
   "en": 
@@ -153,7 +153,7 @@ showinventory:
 
 showguide: 
   "en": |
-    "<b>📋 YoKaiMedals Commands </b>
+    <b>📋 YoKaiMedals Commands </b>
     __________________________________
     /medallium - <i>See your Yo-Kai collection</i>
     /inventory - <i>See your items and Kai earned</i>
@@ -164,10 +164,10 @@ showguide:
     /leaderboard - <i>See the best Yo-Kai hunters</i>
 
     /settings - <i>Change langage and spawnrange settings</i>
-    /contact - <i>Contact us for support or feedbacks</i>" 
+    /contact - <i>Contact us for support or feedbacks</i> 
 
   "it": |
-    "<b>📋 Comandi di YoKaiMedals </b>
+    <b>📋 Comandi di YoKaiMedals </b>
     ____________________________________
     /medallium - <i>Vedi la tua collezione</i>
     /inventory [yokai] - <i>Vedi i tuoi item e i Kai-Dollari</i>
@@ -177,7 +177,7 @@ showguide:
     /leaderboard - <i>Vedi i migliori cacciatori di Yo-Kai</i>
 
     /settings - <i>Cambia la lingua e lo spawnrange</i>
-    /contact - <i>Contattaci per supporto o feedbacks</i>"
+    /contact - <i>Contattaci per supporto o feedbacks</i>
 
 noperms: 
   "en": "⚠️ You don't have any permissions"

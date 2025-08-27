@@ -38,12 +38,13 @@ CREATE TABLE yokai_spawned_data (
 );
 
 -- ITEMS (dipende da users e chats)
-CREATE TABLE items (
+CREATE TABLE IF NOT EXISTS items (
     user_id TEXT NOT NULL,
     chat_id TEXT NOT NULL,
     kai INTEGER NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-    FOREIGN KEY (chat_id) REFERENCES chats(chat_id) ON DELETE CASCADE
+    FOREIGN KEY (chat_id) REFERENCES chats(chat_id) ON DELETE CASCADE,
+    UNIQUE(user_id, chat_id)  -- vincolo di unicità
 );
 
 -- MEDALLIUM_PAGES (dipende da users e chats)
