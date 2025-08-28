@@ -4,10 +4,10 @@ import os
 class Config:
     def __init__(self):
         # Percorsi file YAML
-        self.bot_path = os.path.abspath("config/bot.yml")
-        self.texts_path = os.path.abspath("config/texts.yml")
-        self.urls_path = os.path.abspath("config/urls.yml")
-        self.admin_path = os.path.abspath("config/admins.yml")
+        self.bot_path = os.getenv("CONFIG_BOT_PATH")
+        self.texts_path = os.getenv("CONFIG_TEXTS_PATH")
+        self.urls_path = os.getenv("CONFIG_URLS_PATH")
+        self.admin_path = os.getenv("CONFIG_ADMINS_PATH")
 
         # Carica i contenuti YAML
         self.bot = self._load_yaml(self.bot_path)

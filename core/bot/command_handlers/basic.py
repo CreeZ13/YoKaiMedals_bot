@@ -21,7 +21,7 @@ class BasicCommands:
     async def start(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         if update.message.chat.type != "private":
             return
-        photo_path = os.path.abspath("resources/other_images/botpic.png")
+        photo_path = os.getenv("RESOURCES_OTHER_IMAGES_PATH") + "botpic.png"
         with open(photo_path, "rb") as botpic:
             await update.message.reply_photo(
                 photo=botpic,
@@ -108,7 +108,7 @@ class BasicCommands:
 
         chat_id = str(update.effective_chat.id)
         lang_key = self.getdata.get_language(chat_id)
-        photo_path = os.path.abspath("resources/other_images/crank-a-kai.png")
+        photo_path = os.getenv("RESOURCES_OTHER_IMAGES_PATH") + "crank-a-kai.png"
         with open(photo_path, "rb") as photo:
             await update.message.reply_photo(
                 photo=photo,

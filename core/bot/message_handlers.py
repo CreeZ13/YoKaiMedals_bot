@@ -106,7 +106,7 @@ class MessHandlers:
                 max_friend_limit=max_friend_limit
             )
             # Comunica in chat
-            image_path = os.path.abspath(f"resources/yokai_images/{yokai_id}.png")
+            image_path = os.getenv("RESOURCES_YOKAI_IMAGES_PATH") + f"{yokai_id}.png"
             with open(image_path, "rb") as photo:
                 await context.bot.send_photo(
                     chat_id=self.chat_id,
