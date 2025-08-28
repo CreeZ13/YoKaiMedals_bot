@@ -7,13 +7,13 @@ primary_region = "fra"
 
 [env]
   # variabili d'ambiente che il bot leggerà con os.getenv (il bot token e' un secret)
-  DB_PATH = "/data/database.db"
-  LOG_PATH = "/data/admin_actions.log"
-  YOKAI_JSON_PATH = "/data/yokai_list.json"
+  DB_PATH = "/dati_persistenti/database.db"
+  LOG_PATH = "/dati_persistenti/admin_actions.log"
+  YOKAI_JSON_PATH = "/dati_persistenti/yokai_list.json"
 
 [mounts]
 source = "dati_persistenti"
-destination = "/data"
+destination = "/dati_persistenti"
 
 [[vm]]
 size = "shared-cpu-1x"
