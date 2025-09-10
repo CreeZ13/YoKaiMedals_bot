@@ -63,43 +63,60 @@ class MedalliumCommand:
                       yokai_ids: list[str], page: int):
         self._set_context_data(update, context)
 
-        # 1) Converti in interi
+        # 1) Converti in interi la yokai_ids e crea dizionario {yokai_id: quantita'}
         yokai_ids_int = [int(y_id) for y_id in yokai_ids]
-
-        # 2) Crea dizionario dei count
         yokai_count = {yid: yokai_ids_int.count(yid) for yid in set(yokai_ids_int)}
+        
+        # 2) Suddivisione speciali e normali
+        specials = [y for y in yokai_count if y < 0]
+        normals = [y for y in yokai_count if y > 0]
 
-        # 3) Dividi speciali e normali, ordina separatamente
-        specials = sorted([y for y in yokai_count if y < 0], reverse=True)   # decrescente
-        normals = sorted([y for y in yokai_count if y > 0])                  # crescente
+        # 3) Gestisci ordinamento in base a sort_mode:
+        #     - "id"          → speciali prima (ID decrescente), poi normali (ID crescente)
+        #     - "alphabetic"  → speciali prima (ordinati per nome), poi normali (ordinati per nome)
+        #     In entrambi i casi gli speciali sono sempre messi davanti ai normali
+        sort_mode = self.getdata.get_medallium_pages_data(self.message_id, self.chat_id)["sort_mode"]
+    
+        if sort_mode == "id":   # Ordine classico per ID
+            specials_sorted = sorted(specials, reverse=True)   # speciali: ID decrescente
+            normals_sorted = sorted(normals)                   # normali: ID crescente
+        elif sort_mode == "alphabetical":
+            # Dalle liste specials e normals crei delle parallele dove al posto degli ID hai i nomi degli yokai
+            specials_names = [self.getdata.get_yokai_name_from_id(str(y), self.language).lower() for y in specials]
+            normals_names = [self.getdata.get_yokai_name_from_id(str(y), self.language).lower() for y in normals]
+            # Genera le liste di ID degli yokai ordinate alfabeticamente in base al loro nome
+            # - specials_sorted contiene gli ID speciali
+            # - normals_sorted contiene gli ID normali
+            specials_sorted = [y for _, y in sorted(zip(specials_names, specials))]
+            normals_sorted = [y for _, y in sorted(zip(normals_names, normals))]
 
-        # 4) Unisci mantenendo prima speciali, poi normali
-        yokai_list = specials + normals
-
-        # 5) Suddivisione in pagine
+        # 5) Suddivisione in pagine sulla base di yokai_list totale e PER_PAGE costante
+        yokai_list = specials_sorted + normals_sorted
         PER_PAGE = self.config.get_botConfig("yokai_perpage_in_medallium")
         pages = [tuple(yokai_list[i:i + PER_PAGE]) for i in range(0, len(yokai_list), PER_PAGE)]
 
-        # 6) Genera testo della pagina
+        # 6) Genera testo della pagina 
         text = f"📖 @{self.user_username}<i>'s Medallium</i>\n<b>Page N. {page})</b>\n\n"
         current_page_tuple = pages[page - 1]
-
         for yokai_id in current_page_tuple:
             yokai_name = self.getdata.get_yokai_name_from_id(str(yokai_id), self.language).capitalize()     
             dup = yokai_count[yokai_id]
             dup_text = f"[x{dup}]" if dup > 1 else ""
-            
             if yokai_id < 0:
                 text += f"⭐️ <b>Special {-yokai_id}</b>.\n<i>Yo-Kai</i>:  {yokai_name}    <b>{dup_text}</b>\n\n"
             else:
                 text += f"🆔: <b>{yokai_id}</b>.\n<i>Yo-Kai</i>:  {yokai_name}    <b>{dup_text}</b>\n\n"
 
-        # 7) Crea la tastiera di navigazione
-        if page == 0: 
-            keyboard = self.keyboards.get_keyboard("right_kb", self.language) 
-        elif page == len(pages): 
-            keyboard = self.keyboards.get_keyboard("left_kb", self.language) 
-        else: keyboard = self.keyboards.get_keyboard("rightleft_kb", self.language)
+        # 7) Crea la tastiera di navigazione in base alla pagina attuale e al sort_mode
+        # other_sort_mode e' usata per sapere quale sort_mode NON e' attivo (per il bottone di switch)
+        other_sort_mode = "alphabetical" if sort_mode == "id" else "id"
+
+        if page == 0:   # pagina statistiche
+            keyboard = self.keyboards.get_keyboard("right_kb", self.language)
+        elif page == len(pages):    # ultima pagina 
+            keyboard = self.keyboards.get_keyboard(f"left_sort_{other_sort_mode}_kb", self.language)
+        else:   # pagine intermedie 
+            keyboard = self.keyboards.get_keyboard(f"rightleft_sort_{other_sort_mode}_kb", self.language)
 
         return text, keyboard
 

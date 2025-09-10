@@ -50,7 +50,7 @@ class CallbackHandler:
         elif self.query_data == "close_settings":
             await self._handle_settings_close(context)
 
-        elif self.query_data in ("right", "left"):
+        elif self.query_data in ("right", "left", "sort_id", "sort_alphabetical"):
             await self._handle_medallium_navigation(update, context)
             
     async def _handle_language_selection(self, context: CallbackContext):
@@ -58,14 +58,9 @@ class CallbackHandler:
             # Aggiorna lingua nel DB
             self.updateData.set_language(
                 lang_key=self.query_data, 
-                chat_id=self.chat_id) 
-            
+                chat_id=self.chat_id)  
             # Invia messaggio nel gruppo
-            await context.bot.send_message(
-                chat_id=self.chat_id,
-                text=self.config.get_text("changedlanguage", self.query_data),
-                parse_mode=ParseMode.HTML
-                )
+            await self.query.answer(text=self.config.get_text("changedlanguage", self.query_data))
         else:
             await self.query.answer(text=self.config.get_text("noperms", self.language))
 
@@ -77,11 +72,7 @@ class CallbackHandler:
                 spawnrange=self.query_data
             )
             # Invia messaggio di conferma
-            await context.bot.send_message(
-                chat_id=self.chat_id,
-                text=f"{self.config.get_text('spawnrangechanged', self.language)} <b>{self.query_data}</b>",
-                parse_mode=ParseMode.HTML
-            )
+            await self.query.answer(text=f"{self.config.get_text('spawnrangechanged', self.language)} {self.query_data.capitalize()}")
         else:
             await self.query.answer(text=self.config.get_text("noperms", self.language))
 
@@ -114,7 +105,7 @@ class CallbackHandler:
                                          yokai_id=yokai_id)
 
         # Comunica in chat
-        image_path = os.getenv("RESOURCES_YOKAI_IMAGES_PATH") + f"{yokai_id}.png"
+        image_path = os.path.abspath(f"resources/yokai_images/{yokai_id}.png")
         with open(image_path, "rb") as photo:
             await context.bot.send_photo(
                 chat_id=self.chat_id,
@@ -169,22 +160,24 @@ class CallbackHandler:
 
     async def _handle_medallium_navigation(self, update: Update, context: CallbackContext):
         await self._set_context_data(update, context)
-
         # Controlla se a sfogliare questo medallium e' lo stesso utente che ha digitato /medallium
         # In sostanza gli utenti non possono sfogliare medallium di altra gente
         owner_id_of_that_medallium = self.getData.get_medallium_pages_data(self.message_id, self.chat_id)["user_id"]
         if self.user_id != owner_id_of_that_medallium:
-            await update.callback_query.answer(
-                text=self.config.get_text("noperms", self.language),
-                show_alert=True
-            )
+            await update.callback_query.answer(text=self.config.get_text("noperms", self.language))
             return
 
-        # Calcolo nuova pagina
+        # Calcolo nuova pagina (se si sfoglia (delta = 1 | -1) oppure se si cambia sort_mode (delta = 0))
         if self.query_data == "right":
             delta = 1
         elif self.query_data == "left":
             delta = -1
+        elif self.query_data == "sort_id":
+            self.updateData.update_sort_mode(self.chat_id, self.message_id, "id")
+            delta = 0
+        elif self.query_data == "sort_alphabetical":
+            self.updateData.update_sort_mode(self.chat_id, self.message_id, "alphabetical")
+            delta = 0
 
         # Creazione della pagina 
         yokai_ids = self.getData.get_yokai_ids_collected(self.user_id, self.chat_id)
@@ -193,13 +186,12 @@ class CallbackHandler:
         except TypeError:  # se viene premuto sfogliato un medallium vecchio rimasto aperto o non esistente nel DB
             return
         
+        # Calcola nuova pagina e genera il messaggio aggiornato
         new_page = current_page + delta
         text, keyboard = MedalliumCommand().render_page(update=update, context=context,
                                                          yokai_ids=yokai_ids, page=new_page)
-
-        # Aggiorna la pagina corrente nel DB
         self.updateData.update_current_page(self.chat_id, self.message_id, delta)
-
+        
         # Aggiorna il messaggio del bot
         await context.bot.edit_message_text(
             chat_id=self.chat_id,

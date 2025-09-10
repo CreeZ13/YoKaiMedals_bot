@@ -28,6 +28,14 @@ class UpdateData:
         """
         self._execute(query, (delta, chat_id, message_id))
 
+    def update_sort_mode(self, chat_id: str, message_id: str, sort_mode: str):
+        query = """
+        UPDATE medallium_pages
+        SET sort_mode = ?
+        WHERE chat_id = ? AND message_id = ?
+        """
+        self._execute(query, (sort_mode, chat_id, message_id))
+
     def set_yokai_spawned_true(self, chat_id: str):
         query = "UPDATE check_mess SET is_yokai_spawned = 'True' WHERE chat_id = ?"
         self._execute(query, (chat_id,))

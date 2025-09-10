@@ -35,7 +35,7 @@ class GetData:
     #Restituisce un dizionario con user_id e current_page dalla tabella medallium_pages
     def get_medallium_pages_data(self, message_id: str, chat_id: str) -> dict | None:
         query = """
-            SELECT user_id, current_page
+            SELECT user_id, current_page, sort_mode
             FROM medallium_pages
             WHERE message_id = ? AND chat_id = ?
         """
@@ -179,6 +179,37 @@ class GetData:
             count = row[1]
             data[user_id] = count
         return data
+
+    # Conta quanti utenti distinti in questa chat possiedono almeno una volta lo yokai_id.
+    # I duplicati dello stesso utente non vengono contati.
+    def get_yokai_owners_count_in_group(self, yokai_id: str, chat_id: str) -> int:
+        query = "SELECT user_id, yokai_id FROM yokaidata WHERE chat_id = ?"
+        self.cursor.execute(query, (chat_id,))
+        results = self.cursor.fetchall()
+        owners_set = set()
+        for user_id, yokai_ids in results:
+            if not yokai_ids:
+                continue
+            yokai_list = str(yokai_ids).split(",")
+            if str(yokai_id) in yokai_list:
+                owners_set.add(user_id)
+        return len(owners_set)
+    
+    # Ritorna il numero totale di volte in cui lo yokai_id è presente nel database,
+    # considerando tutti gli utenti e tutte le chat. I duplicati contano in questo caso.
+    # Serve per il comando /flex
+    def get_global_yokai_count(self, yokai_id: str) -> int:
+        query = "SELECT yokai_id FROM yokaidata"
+        self.cursor.execute(query)
+        results = self.cursor.fetchall()
+        
+        total_count = 0
+        for (yokai_ids,) in results:
+            if yokai_ids is None:
+                continue
+            if int(yokai_ids) == int(yokai_id):  # confronto diretto
+                total_count += 1
+        return total_count
 
     # Restituisce il conteggio di kai per un utente in una chat
     def get_kai(self, user_id: str, chat_id: str) -> int:

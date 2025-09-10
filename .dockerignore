@@ -1,7 +1,7 @@
 _backups
 __pycache__
-.env
-.venv
+**.env
+**.venv
 .git
 *.pyc
 *.pyo

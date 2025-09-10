@@ -2,32 +2,31 @@
 
 startprivate:
   en: |
-    <i>A Yo-Kai Watch medallium simulator. Catch as many yo kai as possible in groups!
+    <i><b>A Yo-Kai Watch medallium simulator</b>. 
+    Catch as many yo kai as possible in groups!
     Add me in your group or type /help to see the guide</i>
   
-  it: |
-    <i>Un simulatore del Medaglione Yo-Kai. Cattura quanti più yokai possibile nei gruppi!
-    Aggiungimi in un gruppo oppure scrivi /help per vedere la guida</i>
+  it: "-"
 
 onlyingroups:
   en: "<i>You can use this command only in groups</i>"
-  it: "<i>Puoi usare questo comando solo nei gruppi</i>"
+  it: "-"
 
 botaddedtogroup:
   en: "<i>Let's fill your medallium!\nType /help to see the full guide and set language:</i>"
-  it: "<i>Riempi il tuo Medallium!\nDigita /help per leggere la guida completa e scegliere la lingua:</i>"
+  it: "-"
 
 #############################################
 
 ## TEXTS ##
 
 changedlanguage:
-  "en": "<i>Language set in <b>English</b></i> 🇬🇧"
-  "it": "<i>Lingua impostata in <b>Italiano</b></i> 🇮🇹"
+  "en": "Language set in English 🇬🇧"
+  "it": "Lingua impostata in Italiano 🇮🇹"
 
 showsettings:
-  "en": "⚙️ <b>Settings</b>\n\n<i>- Select an option to change it</i>\n<i>- Only if you are an admin</i>"
-  "it": "⚙️ <b>Impostazioni</b>\n\n<i>- Seleziona un opzione per modificarla</i>\n<i>- Solo se sei amministratore</i>"
+  "en": "⚙️ <b>Settings</b>\n<i>Select an option to change it (only if you are an admin)</i>"
+  "it": "⚙️ <b>Impostazioni</b>\n<i>Seleziona un opzione per modificarla (solo se sei amministratore)</i>"
 
 showmedallium:
   "en":
@@ -43,79 +42,73 @@ showmedallium:
     - "<b>\n💕 Doppioni:</b>"
     - "<b>\n🏆 Medallium completato:</b>"
 emptymedallium: 
-  "en": "<i>Your medallium is still empty...\nLet's friend with some yokai!</i>"
-  "it": "<i>Il tuo medallium e' ancora vuoto... \nStringi amicizia con qualche yokai!</i>"
+  "en": "<i>Your medallium is still empty...\nLet's friend with some Yo-kai!</i>"
+  "it": "<i>Il tuo medallium e' ancora vuoto... \nStringi amicizia con qualche Yo-kai!</i>"
 
 
 yokainotfound: 
-  "en": "<i>This yokai doesn't exist, try again</i>"
-  "it": "<i>Questo yokai non esiste, ritenta</i>"
+  "en": "<i>⚠️The Yo-kai's name is incorrect</i>"
+  "it": "<i>⚠️ Il nome dello Yo-kai è sbagliato</i>"
 yokainotgot: 
-  "en": "<i>You haven't got this yo kai yet</i>"
-  "it": "<i>Non hai ancora questo yokai</i>"
+  "en": "<i>⚠️ You haven't got this Yo-kai yet</i>"
+  "it": "<i>⚠️ Non possiedi ancora questo Yo-kai</i>"
 recipientnotfound:
-  "en": "<i>The username doesn't exist or isn't in the group</i>"
-  "it": "<i>Questo username non esiste o non e' nel gruppo</i>"
+  "en": "<i>⚠️ Username not found or incorrect</i>"
+  "it": "<i>⚠️ Username non trovato o errato</i>"
 ykgiftdone:
   "en": "Gifted!"
   "it": "Regalato!"
 ykgiftguide:
-  "en": "<b>Usage:</b>\n/ykgift [Username] [Yokai]"
-  "it": "<b>Utilizzo:</b>\n/ykgift [Username] [Yokai]"
+  "en": "<b>Usage:</b>\n/ykgift {Username} {Yo-kai}"
+  "it": "<b>Utilizzo:</b>\n/ykgift {Username} {Yo-kai}"
 
 
 releaseguide:
-  "en": <b>Usage:\n</b> /release [Yokai]"
-  "it": "<b>Utilizzo:\n</b> /release [Yokai]"
+  "en": <b>Usage:\n</b> /release {Yo-kai}"
+  "it": "<b>Utilizzo:\n</b> /release {Yo-kai}"
 releasedone:
-  "en": "<i>has released Yokai:</i>"
-  "it": "<i>ha rilasciato lo Yokai:</i>"
+  "en": "<i>has released Yo-kai:</i>"
+  "it": "<i>ha rilasciato lo Yo-kai:</i>"
 
 
 yokaispawnevent: 
-  "en": "<i>A new yokai has just spawned!\nType /friend [yokai] to befriend it!</i>"
-  "it": "<i>E' apparso un nuovo yokai!\nDigita /friend [yokai] per stringergli amicizia!</i>"
+  "en": "<i>A new Yo-kai has just spawned, guess its name!\nType /friend [Name] to befriend it!</i>"
+  "it": "<i>É apparso un nuovo Yo-kai, indovina il suo nome!\nDigita /friend [Nome] per stringerci amicizia!</i>"
 friendguide: 
-  "en": "<i>You can use it when a yokai spawns\n</i>\n<b>Usage:</b> /friend [yokai]"
-  "it": "<i>Puoi usarlo quando uno yokai appare\n</i>\n<b>Utilizzo:</b> /friend [yokai]"
+  "en": "<i>You can use it when a Yo-kai spawns\n</i><b>Usage:</b> /friend {Yo-kai}"
+  "it": "<i>Puoi usarlo quando uno Yo-kai appare\n</i><b>Utilizzo:</b> /friend {yokai}"
 yokaihasescaped: 
   "en": "<i>Oh no! The Yo kai is gone away...</i>"
   "it": "<i>Oh no! Lo yokai e' fuggito...</i>"
 yokaifriended:
   "en": 
     - "<b>\nYo-Kai Rank: </b>"
-    - "<b>\nKai-Dollars earned: </b>" 
+    - "<b>\nKai earned: </b>" 
   "it": 
     - "<b>\nRango Yo-Kai: </b>"
-    - "<b>\nKai-Dollari ottenuti: </b>"
-yokaifailedname: 
-  "en": "<i>Nope, try again</i>"
-  "it": "<i>Errato, ritenta</i>"
+    - "<b>\nKai ottenuti: </b>"
 
 
-nousername: 
-  "en": "<i>Please, set a username to use this bot</i>"
-  "it": "<i>Per favore, imposta uno username per usare il bot</i>"
 changespawnrange: 
   "en": "Select the random Yo-Kai <b>spawnrange</b>:"
   "it": "Seleziona il <b>range di spawning</b> degli Yo-Kai:"
 spawnrangechanged:
-  "en": "<i>Yo-Kai spawnrange set to: </i>"
-  "it": "<i>Range di spawn degli Yo-Kai impostato su: </i>"
+  "en": "Yo-Kai spawnrange set to: "
+  "it": "Range di spawn degli Yo-Kai impostato su: "
 changelang: 
   "en": "Choose the <b>language</b> you want to set:"
   "it": "Scegli la <b>lingua</b> che vuoi impostare:"
 showcontact: 
-  "en": "<b>Contact</b> the bot staff by:"
-  "it": "<b>Contatta</b> lo staff del bot tramite:"
+  "en": "<b>💬 Contact</b> the bot staff by:"
+  "it": "<b>💬 Contatta</b> lo staff del bot tramite:"
 
 showleaderboard:
   "en": "<b>🏆 The best Yo-Kai collectors\n\n</b>"
   "it": "<b>🏆 I miglior collezionisti di Yo-Kai\n\n</b>"
 
 no_leaderboard:
-  en: "<i>Impossible to show leaderboard...\nNo one has caught a Yo-Kai yet in this chat!</i>"
-  it: "<i>Impossibile mostrare la classifica...\nNessuno ha ancora catturato uno Yo-Kai in questa chat!</i>"
+  en: "<i>No leaderboard avaible...\nNo one has caught a Yo-Kai yet in this group!</i>"
+  it: "<i>Nessuna classifica disponibile...\nNessuno ha ancora catturato uno Yo-Kai in questo gruppo!</i>"
 
 
 showcrankakai:
@@ -146,10 +139,31 @@ notenoughkai:
 showinventory:
   "en":
     - " | <i>Inventory 💼</i>"
-    - "<i>Kai-Dollars:</i>"
+    - "<i>Kai got:</i>"
   "it":
     - " | <i>Inventario 💼</i>"
-    - "<i>Kai-Dollari:</i>"
+    - "<i>Kai ottenuti:</i>"
+
+flexguide:
+  "en": "<b>Usage:</b>\n/flex {Yo-kai}"
+  "it": "<b>Utilizzo:</b>\n/flex {Yo-kai}"
+
+flexmessage:
+  "en": 
+    - "<i>is flexing his Yo-kai:</i>"
+    - "<i>🆔 Yo-kai ID:</i>"
+    - "<i>⚜️ Yo-kai Rank:</i>"
+    - "<i>🤝🏽 In the group you have:</i>"
+    - "<i>💬 Owners in this chat:</i>"
+    - "<i>🌍 Times taken globally:</i>"
+  "it": 
+    - "<i>sta flexando il suo Yo-kai:</i>"
+    - "<i>🆔 Yo-kai ID:</i>"
+    - "<i>⚜️ Yo-kai di Rango:</i>"
+    - "<i>🤝🏽 Nel gruppo ne possiedi:</i>"
+    - "<i>💬 Possessori in questa chat:</i>"
+    - "<i>🌍 Volte preso globalmente:</i>"
+
 
 showguide: 
   "en": |
@@ -160,6 +174,7 @@ showguide:
     /friend [yokai] - <i>Get a Yo-Kai when it spawns</i>
     /ykgift [user] [yokai] - <i>Give a Yo-Kai to someone</i>
     /release [yokai] - <i>Release a Yo-Kai from your medallium</i>
+    /flex [yokai] - <i>Flex your Yo-Kai in chat</i>
     /crankakai - <i>Obtain new Yo-Kai!</i>
     /leaderboard - <i>See the best Yo-Kai hunters</i>
 
@@ -170,18 +185,19 @@ showguide:
     <b>📋 Comandi di YoKaiMedals </b>
     ____________________________________
     /medallium - <i>Vedi la tua collezione</i>
-    /inventory [yokai] - <i>Vedi i tuoi item e i Kai-Dollari</i>
+    /inventario [yokai] - <i>Vedi i tuoi item e i Kai-Dollari</i>
     /ykgift [user] [yokai] - <i>Regala un tuo Yo-Kai a qualcuno</i>
-    /release [yokai] - <i>Rilascia uno Yo-Kai dal tuo medallium</i>
+    /rilascia [yokai] - <i>Rilascia uno Yo-Kai dal tuo medallium</i>
+    /flex [yokai] - <i>Flexa il tuo Yo-Kai in chat</i>
     /slotkai - <i>Ottieni nuovi Yo-Kai!</i>
-    /leaderboard - <i>Vedi i migliori cacciatori di Yo-Kai</i>
+    /classifica - <i>Vedi i migliori cacciatori di Yo-Kai</i>
 
     /settings - <i>Cambia la lingua e lo spawnrange</i>
     /contact - <i>Contattaci per supporto o feedbacks</i>
 
 noperms: 
   "en": "⚠️ You don't have any permissions"
-  "it": "⚠️ Non hai i permessi per farlo"
+  "it": "⚠️ Non hai il permesso"
 
 
 ## BUTTONS ##
@@ -214,9 +230,13 @@ left_button:
   "en": "⬅️"
   "it": "⬅️"
 
-sort_button:
-  en: "📖 Sort"
-  it: "📖 Ordina"
+sort_button_id:
+  en: "📖 Sort: ID"
+  it: "📖 Ordina: ID"
+
+sort_button_alphabetical:
+  en: "📖 Sort: Alphabetic"
+  it: "📖 Ordina: Alfabetico"
 
 redcoin_button:
   "en": "🔴 Brave"

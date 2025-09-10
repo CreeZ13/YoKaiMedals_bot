@@ -1,11 +1,10 @@
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, MessageHandler, filters
 from telegram.error import NetworkError
 
-from config.config import Config
 from core.bot.callbacks_handler import CallbackHandler
 from core.bot.message_handlers import MessHandlers
 from core.bot.admin import AdminCommands
-from core.bot.command_handlers import basic, friend, medallium, inventory, leaderboard, release, ykgift
+from core.bot.command_handlers import basic, friend, medallium, inventory, leaderboard, release, ykgift, flex
 
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackQueryHandler, MessageHandler, filters
 
@@ -23,7 +22,8 @@ class BotManager:
         leaderboard_cmd = leaderboard.LeaderboardCommand()
         release_cmd = release.ReleaseCommand()
         ykgift_cmd = ykgift.YkgiftCommand()  
-        
+        flex_cmd = flex.FlexCommand()
+
         mess_handler = MessHandlers()
         callbacks_handler = CallbackHandler()
 
@@ -41,6 +41,7 @@ class BotManager:
         self.application.add_handler(CommandHandler(("release", "rilascia"), release_cmd.release))
         self.application.add_handler(CommandHandler(("inventory", "inventario"), inventory_cmd.inventory))
         self.application.add_handler(CommandHandler(("leaderboard", "classifica"), leaderboard_cmd.leaderboard))
+        self.application.add_handler(CommandHandler("flex", flex_cmd.flex))
 
         # Comandi per gli operatori speciali (ykwi)
         self.application.add_handler(CommandHandler("addkai", admin_cmds.updatekai))

@@ -31,7 +31,8 @@ class Keyboards:
             # medallium page buttons
             "right_button": InlineKeyboardButton(text=self.config.get_text("right_button", lang_key), callback_data="right"),
             "left_button": InlineKeyboardButton(text=self.config.get_text("left_button", lang_key), callback_data="left"),
-            #"sort_button": InlineKeyboardButton(text=self.config.get_text("sort_button", lang_key), callback_data="toggle_sort"),
+            "sort_button_id": InlineKeyboardButton(text=self.config.get_text("sort_button_id", lang_key), callback_data="sort_id"),
+            "sort_button_alphabetical": InlineKeyboardButton(text=self.config.get_text("sort_button_alphabetical", lang_key), callback_data="sort_alphabetical"),
 
             # coins buttons
             "redcoin_button": InlineKeyboardButton(text=self.config.get_text("redcoin_button", lang_key), callback_data="red"),
@@ -90,23 +91,37 @@ class Keyboards:
                 [self._get_button("YoKaiMedalsChannel_button", lang_key)],
             ]),
 
-            # Medallium navigation keyboards
-            "rightleft_kb": InlineKeyboardMarkup([[self._get_button("left_button", lang_key), self._get_button("right_button", lang_key)]]),
-            "right_kb": InlineKeyboardMarkup([[self._get_button("right_button", lang_key)]]),
-            "left_kb": InlineKeyboardMarkup([[self._get_button("left_button", lang_key)]]),
-#            "sort_right_kb": InlineKeyboardMarkup([
-#                [self._get_button("right_button", lang_key)], 
-#                [self._get_button("sort_button", lang_key)]
-#            ]),
-
             "shopcoins_kb": InlineKeyboardMarkup([
-                [self._get_button("redcoin_button", lang_key), self._get_button("yellowcoin_button", lang_key)],
-                [self._get_button("orangecoin_button", lang_key), self._get_button("purplecoin_button", lang_key)],
-                [self._get_button("greencoin_button", lang_key), self._get_button("bluecoin_button", lang_key)],
-                [self._get_button("pinkcoin_button", lang_key), self._get_button("skybluecoin_button", lang_key)],
-                [self._get_button("onestarcoin_button", lang_key), self._get_button("fivestarcoin_button", lang_key)],
-                [self._get_button("specialcoin_button", lang_key)],
+                            [self._get_button("redcoin_button", lang_key), self._get_button("yellowcoin_button", lang_key)],
+                            [self._get_button("orangecoin_button", lang_key), self._get_button("purplecoin_button", lang_key)],
+                            [self._get_button("greencoin_button", lang_key), self._get_button("bluecoin_button", lang_key)],
+                            [self._get_button("pinkcoin_button", lang_key), self._get_button("skybluecoin_button", lang_key)],
+                            [self._get_button("onestarcoin_button", lang_key), self._get_button("fivestarcoin_button", lang_key)],
+                            [self._get_button("specialcoin_button", lang_key)],
+                        ]),
+
+
+            # Medallium navigation keyboards
+            # La right_kb e' unica perche riguarda solo la pagina statistiche, cioe la 0
+            "right_kb": InlineKeyboardMarkup([[self._get_button("right_button", lang_key)]]),
+            
+            "rightleft_sort_id_kb": InlineKeyboardMarkup([
+                [self._get_button("left_button", lang_key), self._get_button("right_button", lang_key)],
+                [self._get_button("sort_button_id", lang_key)]
             ]),
+            "rightleft_sort_alphabetical_kb": InlineKeyboardMarkup([
+                [self._get_button("left_button", lang_key), self._get_button("right_button", lang_key)],
+                [self._get_button("sort_button_alphabetical", lang_key)]
+            ]),
+            
+            "left_sort_id_kb": InlineKeyboardMarkup([
+                [self._get_button("left_button", lang_key)],
+                [self._get_button("sort_button_id", lang_key)]
+            ]),
+            "left_sort_alphabetical_kb": InlineKeyboardMarkup([
+                [self._get_button("left_button", lang_key)],
+                [self._get_button("sort_button_alphabetical", lang_key)]
+            ])
+
         }
         return kb[keyboard_name]
-    
