@@ -136,7 +136,7 @@ class FlexCommand:
         else:   # Se e' uno yokai speciale
             text = (
                 f"@{self.user_username} {self.config.get_text("flexmessage", self.language)[0]} <b>{self.message_text.capitalize()}</b>\n\n"
-                f"{self.config.get_text("flexmessage", self.language)[1]} <b>Special {-yokai_id}</b>\n\n"
+                f"{self.config.get_text("flexmessage", self.language)[1]} <b>Special {-int(yokai_id)}</b>\n\n"
                 f"{self.config.get_text("flexmessage", self.language)[6]}"
             )
             
