@@ -123,15 +123,23 @@ class FlexCommand:
         duplicates = yokai_ids.count(yokai_id)
         how_many_owners_in_group = self.getData.get_yokai_owners_count_in_group(yokai_id, self.chat_id)
         global_yokai_befriended_count = self.getData.get_global_yokai_count(yokai_id)
-        text = (
-            f"@{self.user_username} {self.config.get_text("flexmessage", self.language)[0]} <b>{self.message_text.capitalize()}</b>\n\n"
-            f"{self.config.get_text("flexmessage", self.language)[1]} <b>{yokai_id}</b>\n"
-            f"{self.config.get_text("flexmessage", self.language)[2]} <b>{yokai_rank}</b>\n"
-            f"{self.config.get_text("flexmessage", self.language)[3]} <b>{duplicates}</b>\n"
-            f"{self.config.get_text("flexmessage", self.language)[4]} <b>{how_many_owners_in_group}</b>\n"
-            f"{self.config.get_text("flexmessage", self.language)[5]} <b>{global_yokai_befriended_count}</b>"
-        )
         
+        if int(yokai_id) > 0:   # Se e' uno yokai normale
+            text = (
+                f"@{self.user_username} {self.config.get_text("flexmessage", self.language)[0]} <b>{self.message_text.capitalize()}</b>\n\n"
+                f"{self.config.get_text("flexmessage", self.language)[1]} <b>{yokai_id}</b>\n"
+                f"{self.config.get_text("flexmessage", self.language)[2]} <b>{yokai_rank}</b>\n"
+                f"{self.config.get_text("flexmessage", self.language)[3]} <b>{duplicates}</b>\n"
+                f"{self.config.get_text("flexmessage", self.language)[4]} <b>{how_many_owners_in_group}</b>\n"
+                f"{self.config.get_text("flexmessage", self.language)[5]} <b>{global_yokai_befriended_count}</b>"
+            )
+        else:   # Se e' uno yokai speciale
+            text = (
+                f"@{self.user_username} {self.config.get_text("flexmessage", self.language)[0]} <b>{self.message_text.capitalize()}</b>\n\n"
+                f"{self.config.get_text("flexmessage", self.language)[1]} <b>Special {-yokai_id}</b>\n\n"
+                f"{self.config.get_text("flexmessage", self.language)[6]}"
+            )
+            
         yokai_id = self.getData.get_yokai_id_from_name(self.message_text)
         temp_file_path = self._generate_flex_image(yokai_id)
         await context.bot.send_photo(

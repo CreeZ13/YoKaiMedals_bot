@@ -156,6 +156,7 @@ flexmessage:
     - "<i>🤝🏽 In the group you have:</i>"
     - "<i>💬 Owners in this chat:</i>"
     - "<i>🌍 Times taken globally:</i>"
+    - "<i>🏆 This is a special Yo-kai, got as a reward during the events in @yokaiwatchitalia!</i>" # Questa riga riguarda solo il caso in cui yokai_id < 0, quindi uno yokai speciale YKWI
   "it": 
     - "<i>sta flexando il suo Yo-kai:</i>"
     - "<i>🆔 Yo-kai ID:</i>"
@@ -163,6 +164,7 @@ flexmessage:
     - "<i>🤝🏽 Nel gruppo ne possiedi:</i>"
     - "<i>💬 Possessori in questa chat:</i>"
     - "<i>🌍 Volte preso globalmente:</i>"
+    - "<i>🏆 Questo é uno Yo-kai speciale, ottenuto come ricompensa negli eventi su @yokaiwatchitalia!</i>" # Questa riga riguarda solo il caso in cui yokai_id < 0, quindi uno yokai speciale YKWI
 
 
 showguide: 
