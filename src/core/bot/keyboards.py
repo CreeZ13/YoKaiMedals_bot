@@ -8,8 +8,8 @@ class Keyboards:
     def _get_button(self, button_key: str, lang_key: str) -> InlineKeyboardButton:
         # Bottoni con testo fisso (url)
         url_buttons = {
-            "addbot_button": InlineKeyboardButton(text="Add this Bot ➕", url=self.config.get_url("addbot_url")),
-            "guide_button": InlineKeyboardButton(text="YoKai Info database 📜", url=self.config.get_url("guide_url")),
+            "addbot_button": InlineKeyboardButton(text="Add Bot ➕", url=self.config.get_url("addbot_url")),
+            "guide_button": InlineKeyboardButton(text="Yo-kai database 📜", url=self.config.get_url("guide_url")),
             "credits_button": InlineKeyboardButton(text="Credits ⭐", url=self.config.get_url("credits_url")),
             "YoKaiMedalsSupport_button": InlineKeyboardButton(text="Support 🆘", url=self.config.get_url("support_url")),
             "YoKaiMedalsChannel_button": InlineKeyboardButton(text="Channel 📣", url=self.config.get_url("channel_url")),
