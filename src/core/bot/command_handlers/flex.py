@@ -34,7 +34,7 @@ class FlexCommand:
             0.3: {"-1", "-2", "-6", "321", "444"},
             0.1: {"-12"},
             0.4: {"241", "271", "285", "530", "594", "595", "596", "597", "598", "643", "745", "746", "752"},
-            1.5: {"-4", "100", "445", "494", "518", "750", "751"},
+            1.5: {"-15","-16", "-4", "100", "445", "494", "518", "750", "751"},
             1.75: {"238", "239"},
             3.0: {"434", "435", "436", "437"},
         }
@@ -48,6 +48,10 @@ class FlexCommand:
             Ritorna il path dell'immagine generata, oltre a generarla nella
             directory in questione. Poi l'immagine sara eliminata (dunque e' temp)
         '''
+        
+        if yokai_id in ["-17", "-18"]:  # UNICA ECCEZIONE: jibanyan e komasan dei mille hanno la loro immagine di sfondo unica
+            return os.getenv("RESOURCES_YOKAI_IMAGES_PATH") + f"{yokai_id}.png"
+
         yokai_image_path = os.getenv("RESOURCES_YOKAI_IMAGES_PATH") + f"{yokai_id}.png"
         stage_photo_path = os.getenv("RESOURCES_OTHER_IMAGES_PATH") + "stage.png"
 
@@ -148,4 +152,6 @@ class FlexCommand:
                     caption=text,
                     parse_mode=ParseMode.HTML
                 )
-        os.remove(temp_file_path)   # Rimuovi la foto flex che era temporanea
+        if yokai_id not in ["-17", "-18"]:
+            os.remove(temp_file_path)   # Rimuovi la foto flex che era temporanea
+        

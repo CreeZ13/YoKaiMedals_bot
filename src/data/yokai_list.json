@@ -5367,5 +5367,33 @@
     "it": "fiammocchio",
     "coin": null,
     "rank": null
+  },
+  {
+    "id": "-15",
+    "en": "arachnus comandante",
+    "it": "arachnus comandante",
+    "coin": null,
+    "rank": null
+  },
+  {
+    "id": "-16",
+    "en": "ragabatrax comandante",
+    "it": "ragabatrax comandante",
+    "coin": null,
+    "rank": null
+  },
+  {
+    "id": "-17",
+    "en": "jibanyan dei mille",
+    "it": "jibanyan dei mille",
+    "coin": null,
+    "rank": null
+  },
+  {
+    "id": "-18",
+    "en": "komasan dei mille",
+    "it": "komasan dei mille",
+    "coin": null,
+    "rank": null
   }
 ]
