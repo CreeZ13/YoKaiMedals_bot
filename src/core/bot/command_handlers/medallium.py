@@ -54,7 +54,7 @@ class MedalliumCommand:
             f"{self.config.get_text('showmedallium', self.language)[3]} {duplicates}"
             f"{self.config.get_text('showmedallium', self.language)[4]} {medallium_completion}%"
         )
-        keyboard = self.keyboards.get_keyboard("right_kb", self.language)
+        keyboard = self.keyboards.get_keyboard("medallium_right_kb", self.language)
         return message_text, keyboard
 
 
@@ -112,7 +112,7 @@ class MedalliumCommand:
         other_sort_mode = "alphabetical" if sort_mode == "id" else "id"
 
         if page == 0:   # pagina statistiche
-            keyboard = self.keyboards.get_keyboard("right_kb", self.language)
+            keyboard = self.keyboards.get_keyboard("medallium_right_kb", self.language)
         elif page == len(pages):    # ultima pagina 
             keyboard = self.keyboards.get_keyboard(f"left_sort_{other_sort_mode}_kb", self.language)
         else:   # pagine intermedie 

@@ -175,3 +175,50 @@ class AdminCommands:
             f"✅ Rimosso Yo-kai <b>{yokai_name.capitalize()}</b> a @{username}", 
             parse_mode=ParseMode.HTML
         )  
+
+# ------------------------------- #
+
+    async def annuncia(self, update: Update, context: CallbackContext):
+        # Imposta dati del contesto
+        self._set_context_data(update)
+        # Controllo admin
+        if not self._is_admin(self.user_id):
+            await update.message.reply_text("🚫 Non sei autorizzato.", do_quote=True)
+            return
+
+        # Deve essere risposta a un messaggio
+        if not update.message.reply_to_message:
+            await update.message.reply_text("Usa /annuncia come risposta al messaggio da inviare!", do_quote=True)
+            return
+
+        # Messaggio da inviare e invio a tutti gli utenti
+        await update.message.reply_text(
+            text="📢 Invio a tutti gli utenti in corso...\nPotrebbe richiedere qualche secondo.",
+            parse_mode=ParseMode.HTML
+        )
+
+        msg_to_send = update.message.reply_to_message
+        text_to_send = msg_to_send.text_html or msg_to_send.text or ""
+        users = self.getData.get_all_users()
+        sent_count = 0
+        failed_count = 0
+        result_text = f"✅ Annuncio inviato a:\n"
+        for user_id in users:
+            try:
+                await context.bot.send_message(
+                    chat_id=int(user_id),
+                    text=text_to_send,
+                    parse_mode=ParseMode.HTML,
+                    disable_web_page_preview=True
+                )
+                sent_count += 1
+                result_text += f"{sent_count}) @{self.getData.get_user_info(user_id)['user_username']}\n"
+            except Exception as e:
+                # Ignora utenti che hanno bloccato il bot
+                failed_count += 1
+                
+        # Risposta in chat admin
+        await update.message.reply_text(
+            text=result_text + f"\n\n❌ Falliti: {failed_count}",
+            parse_mode=ParseMode.HTML
+        )

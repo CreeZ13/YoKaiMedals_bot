@@ -56,6 +56,13 @@ class WriteData:
         """
         self._execute(query, (message_id, chat_id, user_id))
 
+    def add_seals_page(self, message_id: str, chat_id: str, user_id: str):
+        query = """
+        INSERT OR IGNORE INTO seals_pages (message_id, chat_id, user_id)
+        VALUES (?, ?, ?)
+        """
+        self._execute(query, (message_id, chat_id, user_id))
+
     def add_items(self, user_id: str, chat_id: str, kai: int):
         query = """
         INSERT OR IGNORE INTO items (user_id, chat_id, kai)
@@ -82,6 +89,10 @@ class WriteData:
 
     def remove_medallium_page(self, chat_id: str, user_id: str):
         query = "DELETE FROM medallium_pages WHERE chat_id = ? AND user_id = ?"
+        self._execute(query, (chat_id, user_id))
+    
+    def remove_seals_page(self, chat_id: str, user_id: str):
+        query = "DELETE FROM seals_pages WHERE chat_id = ? AND user_id = ?"
         self._execute(query, (chat_id, user_id))
 
     def remove_check_mess(self, chat_id: str):

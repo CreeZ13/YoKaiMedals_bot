@@ -68,6 +68,15 @@ class ReleaseCommand:
             )
             return
 
+        # Verifica se lo Yo-Kai da rilasciare e' speciale o leggendario (non puo' essere rilasciato)
+        if int(yokai_id) < 0 or yokai_id in self.getData.get_legendary_yokai_ids():
+            await update.message.reply_text(
+                text=self.config.get_text("cantrelease", self.language),
+                parse_mode=ParseMode.HTML,
+                do_quote=True
+            )
+            return
+
         # Effettua il rilascio dello yokai e comunica in chat
         self.writeData.remove_yokai_from_user(self.user_id, self.chat_id, int(yokai_id))
     

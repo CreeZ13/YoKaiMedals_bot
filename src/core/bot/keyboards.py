@@ -20,19 +20,24 @@ class Keyboards:
         # Bottoni con testo da texts.yml supponendo che sia un dict. es: { "spawnrangefast_button": ["Fast", "Veloce"], ... }
         buttons = {
             # spawnrange buttons
-            "spawnrangefast_button": InlineKeyboardButton(text=self.config.get_text("spawnrangefast_button",lang_key), callback_data="fast"),
-            "spawnrangemedium_button": InlineKeyboardButton(text=self.config.get_text("spawnrangemedium_button", lang_key), callback_data="medium"),
-            "spawnrangeslow_button": InlineKeyboardButton(text=self.config.get_text("spawnrangeslow_button", lang_key), callback_data="slow"),
+            "spawnrangefast_button": InlineKeyboardButton(text=self.config.get_text("spawnrangefast_button",lang_key), callback_data="fast", api_kwargs={"style": "success"}),
+            "spawnrangemedium_button": InlineKeyboardButton(text=self.config.get_text("spawnrangemedium_button", lang_key), callback_data="medium", api_kwargs={"style": "primary"}),
+            "spawnrangeslow_button": InlineKeyboardButton(text=self.config.get_text("spawnrangeslow_button", lang_key), callback_data="slow", api_kwargs={"style": "danger"}),
 
             # language buttons
             "eng_button": InlineKeyboardButton(text=self.config.get_text("eng_button", lang_key), callback_data="en"),
             "ita_button": InlineKeyboardButton(text=self.config.get_text("ita_button", lang_key), callback_data="it"),
 
             # medallium page buttons
-            "right_button": InlineKeyboardButton(text=self.config.get_text("right_button", lang_key), callback_data="right"),
-            "left_button": InlineKeyboardButton(text=self.config.get_text("left_button", lang_key), callback_data="left"),
+            "medallium_right_button": InlineKeyboardButton(text=self.config.get_text("right_button", lang_key), callback_data="right_medallium"),
+            "medallium_left_button": InlineKeyboardButton(text=self.config.get_text("left_button", lang_key), callback_data="left_medallium"),
             "sort_button_id": InlineKeyboardButton(text=self.config.get_text("sort_button_id", lang_key), callback_data="sort_id"),
             "sort_button_alphabetical": InlineKeyboardButton(text=self.config.get_text("sort_button_alphabetical", lang_key), callback_data="sort_alphabetical"),
+
+            # seals page buttons
+            "seals_right_button": InlineKeyboardButton(text=self.config.get_text("right_button", lang_key), callback_data="right_seals"),
+            "seals_left_button": InlineKeyboardButton(text=self.config.get_text("left_button", lang_key), callback_data="left_seals"),
+            "checkseal_button": InlineKeyboardButton(text=self.config.get_text("checkseal_button", lang_key), callback_data="check_seal"),
 
             # coins buttons
             "redcoin_button": InlineKeyboardButton(text=self.config.get_text("redcoin_button", lang_key), callback_data="red"),
@@ -102,26 +107,39 @@ class Keyboards:
 
 
             # Medallium navigation keyboards
-            # La right_kb e' unica perche riguarda solo la pagina statistiche, cioe la 0
-            "right_kb": InlineKeyboardMarkup([[self._get_button("right_button", lang_key)]]),
+            # La medallium_right_kb e' unica perche riguarda solo la pagina statistiche, cioe la 0
+            "medallium_right_kb": InlineKeyboardMarkup([[self._get_button("medallium_right_button", lang_key)]]),
             
             "rightleft_sort_id_kb": InlineKeyboardMarkup([
-                [self._get_button("left_button", lang_key), self._get_button("right_button", lang_key)],
+                [self._get_button("medallium_left_button", lang_key), self._get_button("medallium_right_button", lang_key)],
                 [self._get_button("sort_button_id", lang_key)]
             ]),
             "rightleft_sort_alphabetical_kb": InlineKeyboardMarkup([
-                [self._get_button("left_button", lang_key), self._get_button("right_button", lang_key)],
+                [self._get_button("medallium_left_button", lang_key), self._get_button("medallium_right_button", lang_key)],
                 [self._get_button("sort_button_alphabetical", lang_key)]
             ]),
             
             "left_sort_id_kb": InlineKeyboardMarkup([
-                [self._get_button("left_button", lang_key)],
+                [self._get_button("medallium_left_button", lang_key)],
                 [self._get_button("sort_button_id", lang_key)]
-            ]),
+            ]), 
             "left_sort_alphabetical_kb": InlineKeyboardMarkup([
-                [self._get_button("left_button", lang_key)],
+                [self._get_button("medallium_left_button", lang_key)],
                 [self._get_button("sort_button_alphabetical", lang_key)]
-            ])
+            ]),
+
+            # Seals navigation keyboards
+            "seals_right_kb": InlineKeyboardMarkup([[self._get_button("seals_right_button", lang_key)]]),
+
+            "seals_left_kb": InlineKeyboardMarkup([
+                [self._get_button("checkseal_button", lang_key)],
+                [self._get_button("seals_left_button", lang_key)]
+            ]),
+
+            "seals_rightleft_kb": InlineKeyboardMarkup([
+                [self._get_button("checkseal_button", lang_key)],
+                [self._get_button("seals_left_button", lang_key), self._get_button("seals_right_button", lang_key)]
+            ]),
 
         }
         return kb[keyboard_name]

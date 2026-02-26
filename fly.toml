@@ -6,7 +6,8 @@ primary_region = "fra"
   DB_PATH = "/dati_persistenti/database.db"
   LOG_PATH = "/dati_persistenti/admin_actions.log"
   YOKAI_JSON_PATH = "/dati_persistenti/yokai_list.json"
-  
+  LEGENDARIES_JSON_PATH="./data/legendaries.json"
+
   # il punto d'innanzi ai path vuol dire che si parte dalla cartella /app/ di fly io, ossia la root dove sta main.py
   # Sono uguali al .env locale
   CONFIG_BOT_PATH = "./config/bot.yml"
@@ -16,7 +17,7 @@ primary_region = "fra"
 
   RESOURCES_OTHER_IMAGES_PATH = "./resources/other_images/"
   RESOURCES_YOKAI_IMAGES_PATH = "./resources/yokai_images/"
-
+  TEMP_PATH = "./temp/"
 
 [mounts]
 source = "dati_persistenti"

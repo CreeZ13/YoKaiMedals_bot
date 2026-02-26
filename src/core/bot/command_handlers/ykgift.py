@@ -6,7 +6,6 @@ from config.config import Config
 from core.db_manager.getdata import GetData
 from core.db_manager.writedata import WriteData
 
-
 class YkgiftCommand:
     def __init__(self):
         self.config = Config()
@@ -80,7 +79,56 @@ class YkgiftCommand:
             )
             return
         
-        # Effettua lo scambio e comunica in chat
+        # Verifica se lo Yo-Kai da regalare e' speciale o leggendario (non puo' essere regalato)
+        if int(yokai_id) < 0 or yokai_id in self.getData.get_legendary_yokai_ids():
+            await update.message.reply_text(
+                text=self.config.get_text("cantgift", self.language),
+                parse_mode=ParseMode.HTML,
+                do_quote=True
+            )
+            return
+        
+        """
+            Controllo validità regalo Yokai legato ai sigilli.
+            Regola:
+            - Se il destinatario possiede già lo Yokai → regalo consentito.
+            - Se NON lo possiede:
+                → il regalo è consentito solo se TUTTI i sigilli che richiedono
+                questo Yokai sono già stati completati.
+            - Se esiste almeno un sigillo incompleto che lo richiede → blocco.
+        """
+        
+        seals_yokai_ids = self.getData.get_every_requirements_seals_ids()
+        recipient_yokai_ids = self.getData.get_yokai_ids_collected(recipient_id, self.chat_id)
+        legendary_yokai_ids = self.getData.get_legendary_yokai_ids()
+
+        can_be_gifted = False
+        if yokai_id not in seals_yokai_ids:     #  Se non è un requisito di alcun sigillo, nessun problema
+            can_be_gifted = True
+        if yokai_id in recipient_yokai_ids:     #  Se il destinatario lo possiede già, va bene (una copia vale per tutti)
+            can_be_gifted = True
+
+        if not can_be_gifted:
+            # A questo punto:
+            # - è un requisito di almeno un sigillo
+            # - il destinatario NON lo possiede
+            # → dobbiamo verificare se esiste un sigillo incompleto che lo richiede
+            for legendary_id in legendary_yokai_ids:
+                requirements_ids = self.getData.get_legendary_requirements_ids_from_yokaiID(legendary_id)
+                # Se questo leggendario richiede lo yokai
+                if yokai_id in requirements_ids:
+                    # Se il leggendario NON è ancora posseduto → sigillo incompleto
+                    if legendary_id not in recipient_yokai_ids:
+                        await update.message.reply_text(
+                            text=self.config.get_text("cantgiftseal", self.language),
+                            parse_mode=ParseMode.HTML,
+                            do_quote=True
+                        )
+                        return
+
+        ''' --------------------------------------------------------------- '''
+
+        # Dopo tutte le verifiche, effettua lo scambio e comunica l'avvenuto regalo
         self.writeData.remove_yokai_from_user(self.user_id, self.chat_id, int(yokai_id))
         self.writeData.add_yokai_to_user(recipient_id, self.chat_id, int(yokai_id))
 

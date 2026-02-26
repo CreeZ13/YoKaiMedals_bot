@@ -54,6 +54,7 @@ class FlexCommand:
 
         yokai_image_path = os.getenv("RESOURCES_YOKAI_IMAGES_PATH") + f"{yokai_id}.png"
         stage_photo_path = os.getenv("RESOURCES_OTHER_IMAGES_PATH") + "stage.png"
+        temp_file_path = os.getenv("TEMP_PATH") + "flex_image.png"  # questa foto sara' temporanea
 
         # Carica le due immagini: sfondo e yokai (overlay) e prendi le misure
         background = Image.open(stage_photo_path).convert("RGBA")
@@ -73,9 +74,8 @@ class FlexCommand:
         # Crea immagine e ritorna il path (questa directory stessa)
         result = background.copy()
         result.paste(overlay, (x, y), overlay)
-        output_image = "flex_image.png"  # questa foto sara' temporanea
-        result.save(output_image, "PNG")  
-        return output_image  
+        result.save(temp_file_path, "PNG")  
+        return temp_file_path  
         
 
     async def flex(self, update: Update, context: CallbackContext):

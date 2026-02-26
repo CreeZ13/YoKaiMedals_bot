@@ -189,14 +189,18 @@ class MessHandlers:
         return max_friend_limit
     
     # Estrae un yokai casualmente in base alle probabilità definite nel file di configurazione
+    # Esclude i leggendari dallo spawn normale
     def _spawn_yokai_randomly(self) -> int:
+        legendary_ids = self.getData.get_legendary_ids()
         nprob = randint(1, 100)
         cumulative = 0
         for rank, chance in self.config.get_botConfig("spawn-probabilities").items():
             cumulative += chance
             if nprob <= cumulative:
-                yokai_extracted = choice(self.getData.get_yokai_ids_by_rank(rank))
-                return int(yokai_extracted)
+                while True:
+                    yokai_extracted = choice(self.getData.get_yokai_ids_by_rank(rank))
+                    if yokai_extracted not in legendary_ids:      
+                        return int(yokai_extracted)
 
     # Resetta i dati dell'evento di spawn
     def _reset_spawn_event_data(self) -> None:

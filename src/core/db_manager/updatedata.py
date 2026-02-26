@@ -20,9 +20,17 @@ class UpdateData:
         query = "UPDATE chats SET spawnrange = ? WHERE chat_id = ?"
         self._execute(query, (spawnrange, chat_id))
 
-    def update_current_page(self, chat_id: str, message_id: str, delta: int):
+    def update_current_medallium_page(self, chat_id: str, message_id: str, delta: int):
         query = """
         UPDATE medallium_pages
+        SET current_page = current_page + ?
+        WHERE chat_id = ? AND message_id = ?
+        """
+        self._execute(query, (delta, chat_id, message_id))
+
+    def update_current_seals_page(self, chat_id: str, message_id: str, delta: int):
+        query = """
+        UPDATE seals_pages
         SET current_page = current_page + ?
         WHERE chat_id = ? AND message_id = ?
         """

@@ -1487,7 +1487,7 @@
     "id": "213",
     "en": "morigami rex",
     "it": "tirannoguardiano",
-    "coin": "pink",
+    "coin": null,
     "rank": "s"
   },
   {
@@ -3209,7 +3209,7 @@
     "id": "459",
     "en": "kanekui hime",
     "it": "principessa divorasoldi",
-    "coin": "blue",
+    "coin": null,
     "rank": "s"
   },
   {
@@ -4357,7 +4357,7 @@
     "id": "623",
     "en": "shogunyan",
     "it": "shogunyan",
-    "coin": "red",
+    "coin": null,
     "rank": "s"
   },
   {
@@ -4399,70 +4399,70 @@
     "id": "629",
     "en": "komashura",
     "it": "komademone",
-    "coin": "yellow",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "630",
     "en": "gilgaros",
     "it": "gilgador",
-    "coin": "orange",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "631",
     "en": "spoilerina",
     "it": "rovinella",
-    "coin": "pink",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "632",
     "en": "elder bloom",
     "it": "senilfior",
-    "coin": "one_star",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "633",
     "en": "poofessor",
     "it": "professorso",
-    "coin": "blue",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "634",
     "en": "dandoodle",
     "it": "barbonbel",
-    "coin": "purple",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "635",
     "en": "slurpent",
     "it": "octaserp",
-    "coin": "skyblue",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "636",
     "en": "re-q-perate",
     "it": "quesausto",
-    "coin": "purple",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "637",
     "en": "princess pearl",
     "it": "principerla",
-    "coin": "pink",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "638",
     "en": "asura",
     "it": "takkabrig",
-    "coin": "red",
+    "coin": null,
     "rank": "s"
   },
   {
@@ -4847,7 +4847,7 @@
     "id": "693",
     "en": "whyvern king",
     "it": "domandemonio",
-    "coin": "skyblue",
+    "coin": null,
     "rank": "s"
   },
   {
@@ -5057,7 +5057,7 @@
     "id": "723",
     "en": "yodelsen",
     "it": "yollusionista",
-    "coin": "yellow",
+    "coin": null,
     "rank": "s"
   },
   {
@@ -5176,91 +5176,91 @@
     "id": "740",
     "en": "lord enma",
     "it": "enma il grande",
-    "coin": "enma",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "741",
     "en": "ancient enma",
     "it": "enma l'antico",
-    "coin": "enma",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "742",
     "en": "lord enma awoken",
     "it": "enma risvegliato",
-    "coin": "enma",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "743",
     "en": "solar enma",
     "it": "enma helios",
-    "coin": "enma",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "744",
     "en": "infinite enma",
     "it": "enma chronos",
-    "coin": "enma",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "745",
     "en": "umbral enma",
     "it": "enma humbra",
-    "coin": "enma",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "746",
     "en": "yami enma",
     "it": "enma oscuro",
-    "coin": "enma",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "747",
     "en": "lord ananta",
     "it": "kaira il sovrano",
-    "coin": "enma",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "748",
     "en": "enma meiou maka",
     "it": "enma guardiano",
-    "coin": "enma",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "749",
     "en": "enma neko'ou matatabi",
     "it": "enmanyan",
-    "coin": "enma",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "750",
     "en": "enma ryuuou mizuchi",
     "it": "enma drago",
-    "coin": "enma",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "751",
     "en": "enma raou tekkaku",
     "it": "enma guerriero",
-    "coin": "enma",
+    "coin": null,
     "rank": "s"
   },
   {
     "id": "752",
     "en": "lord acala",
     "it": "irremosaggio",
-    "coin": "enma",
+    "coin": null,
     "rank": "s"
   },
   {

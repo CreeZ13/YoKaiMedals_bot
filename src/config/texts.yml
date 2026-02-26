@@ -5,7 +5,6 @@ startprivate:
     <i><b>A Yo-Kai Watch medallium simulator</b>. 
     Catch as many yo kai as possible in groups!
     Add me in your group or type /help to see the guide</i>
-  
   it: "-"
 
 onlyingroups:
@@ -55,20 +54,31 @@ yokainotgot:
 recipientnotfound:
   "en": "<i>⚠️ Username not found or incorrect</i>"
   "it": "<i>⚠️ Username non trovato o errato</i>"
+cantgift:
+  "en": "<i>⚠️ You can't gift this Yo-kai</i>"
+  "it": "<i>⚠️ Non puoi regalare questo Yo-kai</i>"  
 ykgiftdone:
   "en": "Gifted!"
   "it": "Regalato!"
 ykgiftguide:
   "en": "<b>Usage:</b>\n/ykgift {Username} {Yo-kai}"
   "it": "<b>Utilizzo:</b>\n/ykgift {Username} {Yo-kai}"
+cantgiftseal:
+  "en": "<i>⚠️ You can't gift this Yo-kai because it's required to unlock a seal! 
+    You can only gift it if the recipient already has this Yo-kai or if the seal was already unlocked.</i>"
+  "it": "<i>⚠️ Non puoi regalare questo Yo-kai perché è richiesto per sbloccare un sigillo! 
+    Puoi regalarlo solo se il destinatario ha già questo Yo-kai o il sigillo è già stato sbloccato.</i>"
 
 
 releaseguide:
-  "en": <b>Usage:\n</b> /release {Yo-kai}"
+  "en": "<b>Usage:\n</b> /release {Yo-kai}"
   "it": "<b>Utilizzo:\n</b> /release {Yo-kai}"
 releasedone:
   "en": "<i>has released Yo-kai:</i>"
   "it": "<i>ha rilasciato lo Yo-kai:</i>"
+cantrelease:
+  "en": "<i>⚠️ You can't release this Yo-kai</i>"
+  "it": "<i>⚠️ Non puoi rilasciare questo Yo-kai</i>"
 
 
 yokaispawnevent: 
@@ -166,17 +176,44 @@ flexmessage:
     - "<i>🌍 Volte preso globalmente:</i>"
     - "<i>🏆 Questo é uno Yo-kai speciale, ottenuto come ricompensa negli eventi su @yokaiwatchitalia!</i>" # Questa riga riguarda solo il caso in cui yokai_id < 0, quindi uno yokai speciale YKWI
 
+sealsinfo:
+  "en": 
+    - "<b>🔮 Seals of</b>"
+    - "<i>🏆 Legendary obtained:</i>"
+    - "<i>Complete the seals by catching specific Yo-Kai to obtain legendaries!</i>"
+    - "<i>Legendary:</i>"
+  "it": 
+    - "<b>🔮 Sigilli di</b>"
+    - "<i>🏆 Leggendari ottenuti:</i>"
+    - "<i>Completa i sigilli catturando specifici Yo-Kai per ottenere i leggendari!</i>"   
+    - "<i>Leggendario:</i>"
 
+sealunlocked:
+  "en":
+    - "<i>has unlocked the seal and obtained the legendary:</i>"
+    - "<i><b>Kai</b> received as reward</i>"
+  "it": 
+    - "<i>ha sbloccato il sigillo e ottenuto il leggendario:</i>"
+    - "<i><b>Kai</b> ricevuti come ricompensa</i>"
+seallocked:
+  "en": "🔒 Oh no! The seal is locked, befriend more Yo-Kai to complete it!"
+  "it": "🔒 Oh no! Il sigillo è bloccato, stringi amicizia con più Yo-Kai per completarlo!"
+sealalreadyunlocked:
+  "en": "🏆 You have already unlocked this seal and obtained the legendary!"
+  "it": "🏆 Hai già sbloccato questo sigillo e ottenuto il leggendario!"
+
+    
 showguide: 
   "en": |
     <b>📋 YoKaiMedals Commands </b>
-    __________________________________
+    ______________________________
     /medallium - <i>See your Yo-Kai collection</i>
     /inventory - <i>See your items and Kai earned</i>
-    /friend [yokai] - <i>Get a Yo-Kai when it spawns</i>
-    /ykgift [user] [yokai] - <i>Give a Yo-Kai to someone</i>
-    /release [yokai] - <i>Release a Yo-Kai from your medallium</i>
-    /flex [yokai] - <i>Flex your Yo-Kai in chat</i>
+    /friend - <i>Get a Yo-Kai when it spawns</i>
+    /ykgift - <i>Give a Yo-Kai to someone</i>
+    /seals - <i>Obtain the legendary Yo-Kai completing seals</i>
+    /release - <i>Release a Yo-Kai from your medallium</i>
+    /flex - <i>Flex your Yo-Kai in chat</i>
     /crankakai - <i>Obtain new Yo-Kai!</i>
     /leaderboard - <i>See the best Yo-Kai hunters</i>
 
@@ -185,15 +222,17 @@ showguide:
 
   "it": |
     <b>📋 Comandi di YoKaiMedals </b>
-    ____________________________________
+    ________________________________
     /medallium - <i>Vedi la tua collezione</i>
-    /inventario [yokai] - <i>Vedi i tuoi item e i Kai-Dollari</i>
-    /ykgift [user] [yokai] - <i>Regala un tuo Yo-Kai a qualcuno</i>
-    /rilascia [yokai] - <i>Rilascia uno Yo-Kai dal tuo medallium</i>
-    /flex [yokai] - <i>Flexa il tuo Yo-Kai in chat</i>
+    /inventario - <i>Vedi i tuoi item e i Kai-Dollari</i>
+    /friend - <i>Aggiungi Yo-Kai alla tua collezione</i>
+    /ykgift - <i>Regala un tuo Yo-Kai a qualcuno</i>
+    /sigilli - <i>Ottieni Yo-kai leggendari completando i sigilli</i>
+    /rilascia - <i>Rilascia uno Yo-Kai dal tuo medallium</i>
+    /flex - <i>Flexa il tuo Yo-Kai in chat</i>
     /slotkai - <i>Ottieni nuovi Yo-Kai!</i>
     /classifica - <i>Vedi i migliori cacciatori di Yo-Kai</i>
-
+    
     /settings - <i>Cambia la lingua e lo spawnrange</i>
     /contact - <i>Contattaci per supporto o feedbacks</i>
 
@@ -205,16 +244,16 @@ noperms:
 ## BUTTONS ##
 
 spawnrangefast_button:
-  "en": "🔴 Fast: 25 - 45"
-  "it": "🔴 Veloce: 25 - 45"
+  "en": "🟢 Fast: 25 - 45"
+  "it": "🟢 Veloce: 25 - 45"
 
 spawnrangemedium_button:
-  "en": "🟡 Normal: 45 - 65"
-  "it": "🟡 Normale: 45 - 65"
+  "en": "🔵 Normal: 45 - 65"
+  "it": "🔵 Normale: 45 - 65"
   
 spawnrangeslow_button:
-  "en": "🟢 Slow: 65 - 85"
-  "it": "🟢 Lento: 65 - 85"
+  "en": "🔴 Slow: 65 - 85"
+  "it": "🔴 Lento: 65 - 85"
   
 eng_button:
   "en": "English 🇬🇧"
@@ -295,7 +334,11 @@ languages_button:
 contacts_button:
   "en": "Support/Credits 🛎️"
   "it": "Supporto/Crediti 🛎️"
-  
+
+checkseal_button:
+  "en": "Check 🔮"
+  "it": "Controlla 🔮"
+
 closesettings_button:
   "en": "Close ❌"
   "it": "Chiudi ❌"

@@ -6,6 +6,7 @@ class GetData:
         self.conn = self.db_connection.connect()
         self.cursor = self.conn.cursor()
         self.yokai_list = self.db_connection.get_yokai_list()
+        self.legendaries = self.db_connection.get_legendaries()
 
     # Restituisce la lingua settata per una chat se esiste, altrimenti None
     def get_language(self, chat_id: str) -> str | None:
@@ -32,11 +33,25 @@ class GetData:
         columns = [desc[0] for desc in self.cursor.description]
         return dict(zip(columns, row))
 
-    #Restituisce un dizionario con user_id e current_page dalla tabella medallium_pages
+    # Restituisce un dizionario con user_id e current_page dalla tabella medallium_pages
     def get_medallium_pages_data(self, message_id: str, chat_id: str) -> dict | None:
         query = """
             SELECT user_id, current_page, sort_mode
             FROM medallium_pages
+            WHERE message_id = ? AND chat_id = ?
+        """
+        self.cursor.execute(query, (message_id, chat_id))
+        row = self.cursor.fetchone()
+        if row is None:
+            return None
+        columns = [desc[0] for desc in self.cursor.description]
+        return dict(zip(columns, row))
+
+    # Restituisce un dizionario con user_id e current_page dalla tabella seals_pages
+    def get_seals_pages_data(self, message_id: str, chat_id: str) -> dict | None:
+        query = """
+            SELECT user_id, current_page
+            FROM seals_pages
             WHERE message_id = ? AND chat_id = ?
         """
         self.cursor.execute(query, (message_id, chat_id))
@@ -52,6 +67,22 @@ class GetData:
             """
             SELECT message_id
             FROM medallium_pages
+            WHERE chat_id = ? AND user_id = ?
+            LIMIT 1
+            """,
+            (chat_id, user_id)
+        )
+        row = self.cursor.fetchone()
+        if row:
+            return str(row[0])
+        return None
+    
+    # Restituisce il message_id dei sigilli aperti per una chat e un utente oppure None se non esiste
+    def get_message_id_from_seals_pages(self, chat_id: str, user_id: str) -> str | None:
+        self.cursor.execute(
+            """
+            SELECT message_id
+            FROM seals_pages
             WHERE chat_id = ? AND user_id = ?
             LIMIT 1
             """,
@@ -154,6 +185,13 @@ class GetData:
             return {"user_username": result[0], "user_fullname": result[1]}
         return None
     
+    # Restituisce una lista di tutti gli user_id presenti nella tabella users
+    def get_all_users(self):
+        query = "SELECT user_id FROM users"
+        self.cursor.execute(query)
+        users = [row[0] for row in self.cursor.fetchall()]
+        return users
+
     # Restituisce una lista di yokai_id raccolti da un utente in una chat
     def get_yokai_ids_collected(self, user_id: str, chat_id: str) -> list[str]:
         query = """
@@ -218,3 +256,47 @@ class GetData:
         result = self.cursor.fetchone()
         return result[0] if result else 0
     
+    # Restituisce la lista degli id degli yokai leggendari di yokai_list
+    def get_legendary_yokai_ids(self) -> list[str]:
+        yokai_ids = []
+        for legendary in self.legendaries:
+            yokai_ids.append(legendary["yokai_id"])
+        return yokai_ids
+    
+    # Restituisce la lista degli id degli yokai richiesti di un sigillo leggendario dato l'id dello yokai di yokai_list
+    def get_legendary_requirements_ids_from_yokaiID(self, yokai_id: str) -> list[str]:
+        for legendary in self.legendaries:
+            if legendary["yokai_id"] == yokai_id:
+                return legendary["requirements_ids"]
+
+    # Restituisce la lista degli id degli yokai richiesti di un sigillo leggendario dato l'id assoluto del sigillo (da 1 a 15)
+    def get_legendary_requirements_ids_from_legendaryID(self, legendary_id: str) -> list[str]:
+        for legendary in self.legendaries:
+            if legendary["legendary_id"] == legendary_id:
+                return legendary["requirements_ids"]       
+    
+    # Restituisce la lista di tutti gli id degli yokai richiesti da tutti i sigilli leggendari 
+    # (serve per controllare se uno yokai da regalare è tra quelli dei sigilli)
+    def get_every_requirements_seals_ids(self) -> list[str]:
+        requirements_ids = []
+        for legendary in self.legendaries:
+            requirements_ids.extend(legendary["requirements_ids"])
+        return requirements_ids
+    
+    # Restituisce lo yokai_id di yokai_list a partire dal legendary_id di legendaries.json
+    def get_yokai_id_from_legendary_id(self, legendary_id: str) -> str | None:
+        for legendary in self.legendaries:
+            if legendary["legendary_id"] == legendary_id:
+                return legendary["yokai_id"]
+        return None
+
+    # Restituisce il numero di leggendari posseduti da un utente in una chat
+    def get_number_of_legendaries_owned(self, user_id: str, chat_id: str) -> int:
+        owned_yokai_ids = self.get_yokai_ids_collected(user_id, chat_id)
+        legendary_ids = self.get_legendary_yokai_ids()
+        count = 0
+        for yokai_id in owned_yokai_ids:
+            if yokai_id in legendary_ids:
+                count += 1
+        return count
+                

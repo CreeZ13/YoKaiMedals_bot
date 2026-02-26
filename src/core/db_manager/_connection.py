@@ -6,6 +6,7 @@ class DatabaseConnection:
     def __init__(self):
         self.db_path = os.getenv("DB_PATH")
         self.yokai_json_path = os.getenv("YOKAI_JSON_PATH")
+        self.legendaries_json_path = os.getenv("LEGENDARIES_JSON_PATH")
         self._conn = None
 
     def connect(self) -> sqlite3.Connection:
@@ -27,6 +28,15 @@ class DatabaseConnection:
                 return json.load(f)
         except Exception as e:
             print(f"[DatabaseConnection] Errore durante il caricamento di yokai_list.json: {e}")
+            return []
+
+    def get_legendaries(self) -> list[dict]:
+        """Carica la lista dei leggendari dal file JSON."""
+        try:
+            with open(self.legendaries_json_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"[DatabaseConnection] Errore durante il caricamento di legendaries.json: {e}")
             return []
 
     def close(self):

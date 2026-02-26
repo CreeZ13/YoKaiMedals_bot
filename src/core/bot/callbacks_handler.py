@@ -1,7 +1,7 @@
 import os
 from random import choice
 
-from telegram import Update
+from telegram import Update, InputMediaPhoto
 from telegram.ext import CallbackContext
 from telegram.constants import ParseMode
 
@@ -11,8 +11,9 @@ from core.db_manager.updatedata import UpdateData
 from core.db_manager.writedata import WriteData
 from core.bot.keyboards import Keyboards
 
-# Importa la classe MedalliumCommand per le funzioni di paging
+# Importa la classe MedalliumCommand e SealsCommand per le funzioni di paging
 from core.bot.command_handlers.medallium import MedalliumCommand
+from core.bot.command_handlers.seals import SealsCommand
 
 class CallbackHandler:
     def __init__(self):
@@ -50,9 +51,38 @@ class CallbackHandler:
         elif self.query_data == "close_settings":
             await self._handle_settings_close(context)
 
-        elif self.query_data in ("right", "left", "sort_id", "sort_alphabetical"):
+        elif self.query_data in ("right_medallium", "left_medallium", "sort_id", "sort_alphabetical"):
             await self._handle_medallium_navigation(update, context)
+        elif self.query_data in ("right_seals", "left_seals"):
+            await self._handle_seals_navigation(update, context)
+        elif self.query_data == "check_seal":
+            await self._handle_check_seal(update, context)
             
+    async def _handle_check_seal(self, update: Update, context: CallbackContext):
+        # Recupera il messaggio corrente e il contesto
+        self._set_context_data(update, context)
+        # Recupera l'ID del messaggio del bot (che contiene i sigilli)
+        medallium_message_id = self.getData.get_message_id_from_seals_pages(self.chat_id, self.user_id)
+        if not medallium_message_id:
+            await self.query.answer(text=self.config.get_text("error", self.language))
+            return
+
+        # Costruisci la nuova pagina con i sigilli completati
+        seals_command = SealsCommand()
+        text, keyboard = seals_command.render_page(update=update, context=context, page=0)
+
+        # Modifica il messaggio esistente con la nuova pagina
+        try:
+            await context.bot.edit_message_text(
+                chat_id=self.chat_id,
+                message_id=medallium_message_id,
+                text=text,
+                parse_mode=ParseMode.HTML,
+                reply_markup=keyboard
+            )
+        except Exception:
+            await self.query.answer(text=self.config.get_text("error", self.language))
+
     async def _handle_language_selection(self, context: CallbackContext):
         if self.user_status in ("creator", "administrator"):
             # Aggiorna lingua nel DB
@@ -155,7 +185,7 @@ class CallbackHandler:
         
 
     # ------------------------------------------
-    # Gestione query speciale per i right e left button del medallium
+    # Gestione query speciale per i right e left button del MEDALLIUM
     # ------------------------------------------
 
     async def _handle_medallium_navigation(self, update: Update, context: CallbackContext):
@@ -168,9 +198,9 @@ class CallbackHandler:
             return
 
         # Calcolo nuova pagina (se si sfoglia (delta = 1 | -1) oppure se si cambia sort_mode (delta = 0))
-        if self.query_data == "right":
+        if self.query_data == "right_medallium":
             delta = 1
-        elif self.query_data == "left":
+        elif self.query_data == "left_medallium":
             delta = -1
         elif self.query_data == "sort_id":
             self.updateData.update_sort_mode(self.chat_id, self.message_id, "id")
@@ -190,7 +220,7 @@ class CallbackHandler:
         new_page = current_page + delta
         text, keyboard = MedalliumCommand().render_page(update=update, context=context,
                                                          yokai_ids=yokai_ids, page=new_page)
-        self.updateData.update_current_page(self.chat_id, self.message_id, delta)
+        self.updateData.update_current_medallium_page(self.chat_id, self.message_id, delta)
         
         # Aggiorna il messaggio del bot
         await context.bot.edit_message_text(
@@ -200,3 +230,123 @@ class CallbackHandler:
             parse_mode=ParseMode.HTML,
             reply_markup=keyboard
         )
+
+    # ------------------------------------------
+    # Gestione query speciale per i right e left button dei SIGILLI
+    # ------------------------------------------
+
+    async def _handle_seals_navigation(self, update: Update, context: CallbackContext):
+        await self._set_context_data(update, context)
+        # Controlla se a sfogliare questi sigilli e' lo stesso utente che ha digitato /sigilli
+        owner_id_of_that_seals = self.getData.get_seals_pages_data(self.message_id, self.chat_id)["user_id"]
+        if self.user_id != owner_id_of_that_seals:
+            await update.callback_query.answer(text=self.config.get_text("noperms", self.language))
+            return
+
+        # Calcolo nuova pagina (se si sfoglia (delta = 1 | -1))
+        if self.query_data == "right_seals":
+            delta = 1
+        elif self.query_data == "left_seals":
+            delta = -1
+
+        # Creazione della pagina 
+        try:
+            current_page = int(self.getData.get_seals_pages_data(self.message_id, self.chat_id)["current_page"])
+        except (TypeError, ValueError):  # se viene premuto sfogliato un sigillo vecchio rimasto aperto o non esistente nel DB
+            return
+        
+        # Calcola nuova pagina e genera il messaggio aggiornato
+        new_page = current_page + delta
+        text, keyboard = SealsCommand().render_page(update=update, context=context, page=new_page)
+        self.updateData.update_current_seals_page(self.chat_id, self.message_id, delta)
+
+        # --- Controlla prima se il sigillo e' sbloccato per decidere se la foto sara' nera o originale ---
+        # --- Dunque se l'utente ha il leggendario nel suo medallium ---
+        owned_yokai_ids = self.getData.get_yokai_ids_collected(self.user_id, self.chat_id)
+        yokai_id = self.getData.get_yokai_id_from_legendary_id(str(new_page))
+        is_unlocked = yokai_id in owned_yokai_ids
+
+        # --- Determina il path dell'immagine ---
+        if new_page == 0:
+            temp_file_path = os.getenv("RESOURCES_OTHER_IMAGES_PATH") + "seals.png"
+            is_temp = False
+        else:
+            yokai_id = self.getData.get_yokai_id_from_legendary_id(str(new_page))
+            temp_file_path = SealsCommand()._generate_seal_image(yokai_id=yokai_id, is_unlocked=is_unlocked)
+            is_temp = True
+
+        # --- Modifica messaggio ---
+        with open(temp_file_path, "rb") as photo:
+            await update.callback_query.edit_message_media(
+                media=InputMediaPhoto(
+                    media=photo,
+                    caption=text,
+                    parse_mode=ParseMode.HTML,
+                ),
+                reply_markup=keyboard
+            )
+        # --- Rimuovi file temporaneo se necessario ---
+        if is_temp:
+            os.remove(temp_file_path)
+
+    
+    ''' 
+        Recupera il medallium dello user nella chat e confrontalo con i requisiti del sigillo della pagina attuale
+        Per vedere se ha sbloccato quel sigillo o no (e mostrare di conseguenza il nome del leggendario).
+        Se gia l'utente ha il leggendario, mostra un messaggio "hai gia sbloccato questo sigillo" altrimenti mostra "sigillo ancora bloccato"
+    '''
+    async def _handle_check_seal(self, update: Update, context: CallbackContext):
+        await self._set_context_data(update, context)
+        # Controlla se a premere questo check e' lo stesso utente che ha digitato /sigilli
+        owner_id_of_that_seals = self.getData.get_seals_pages_data(self.message_id, self.chat_id)["user_id"]
+        if self.user_id != owner_id_of_that_seals:
+            await update.callback_query.answer(text=self.config.get_text("noperms", self.language))
+            return
+
+        # Blocco di controllo se il sigillo e' gia' stato sbloccato o no (cioe se l'utente ha o no il leggendario)
+        legendary_id = str(self.getData.get_seals_pages_data(self.message_id, self.chat_id)["current_page"]) # corrisponde all' id del leggendario 
+        yokai_id = self.getData.get_yokai_id_from_legendary_id(legendary_id)
+        owned_yokai_ids = self.getData.get_yokai_ids_collected(self.user_id, self.chat_id)
+        if yokai_id in owned_yokai_ids:
+            await update.callback_query.answer(text=self.config.get_text("sealalreadyunlocked", self.language), show_alert=True)
+            return
+
+        # Fai il check dei requisiti per vedere se il sigillo e' ancora bloccato o no
+        requirements_ids = self.getData.get_legendary_requirements_ids_from_legendaryID(legendary_id)
+        if requirements_ids is None: #  Per evitare strani errori
+            return 
+        has_unlocked = all(req_id in owned_yokai_ids for req_id in requirements_ids) # confronta tutto
+        if has_unlocked:
+            # Assegna le ricompense (legendario e kai)
+            KAI_REWARD = self.config.get_botConfig("kai_earned_unlocking_seal")
+            self.writeData.add_yokai_to_user(user_id=self.user_id, chat_id=self.chat_id, yokai_id=yokai_id)
+            self.updateData.update_kai(user_id=self.user_id, chat_id=self.chat_id, delta=KAI_REWARD)
+            
+            # Comunica in chat
+            yokai_name = self.getData.get_yokai_name_from_id(yokai_id, self.language)
+            await context.bot.send_message(
+                chat_id=self.chat_id,
+                text=f"@{self.user_username} {self.config.get_text('sealunlocked', self.language)[0]} \n<b>{yokai_name.capitalize()} 🏆</b>\n",
+                parse_mode=ParseMode.HTML,
+            )  
+            await context.bot.send_message(
+                chat_id=self.chat_id,
+                text=f"<b>+{KAI_REWARD}</b> {self.config.get_text('sealunlocked', self.language)[1]}",
+                parse_mode=ParseMode.HTML,
+            )
+            # Aggiorna la pagina dei sigilli (per mostrare il nome del leggendario al posto di "???" 
+            # e l'immagine sbloccata al posto di quella nera)
+            text, keyboard = SealsCommand().render_page(update=update, context=context, page=int(legendary_id))
+            temp_file_path = SealsCommand()._generate_seal_image(yokai_id=yokai_id, is_unlocked=True)
+            await update.callback_query.edit_message_media(
+                media=InputMediaPhoto(
+                    media=open(temp_file_path, "rb"),
+                    caption=text,
+                    parse_mode=ParseMode.HTML,
+                ),
+                reply_markup=keyboard
+            )
+            os.remove(temp_file_path)  # rimuovi file temporaneo
+
+        else:
+            await update.callback_query.answer(text=self.config.get_text("seallocked", self.language), show_alert=True)
