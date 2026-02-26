@@ -5,11 +5,12 @@ primary_region = "fra"
   # variabili d'ambiente che il bot leggerà con os.getenv (il bot token e' un secret)
   DB_PATH = "/dati_persistenti/database.db"
   LOG_PATH = "/dati_persistenti/admin_actions.log"
-  YOKAI_JSON_PATH = "/dati_persistenti/yokai_list.json"
-  LEGENDARIES_JSON_PATH="./data/legendaries.json"
 
   # il punto d'innanzi ai path vuol dire che si parte dalla cartella /app/ di fly io, ossia la root dove sta main.py
   # Sono uguali al .env locale
+  YOKAI_JSON_PATH = "./data/yokai_list.json"
+  LEGENDARIES_JSON_PATH="./data/legendaries.json"
+
   CONFIG_BOT_PATH = "./config/bot.yml"
   CONFIG_TEXTS_PATH = "./config/texts.yml"
   CONFIG_URLS_PATH = "./config/urls.yml"
