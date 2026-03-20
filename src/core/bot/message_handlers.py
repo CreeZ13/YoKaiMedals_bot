@@ -191,7 +191,7 @@ class MessHandlers:
     # Estrae un yokai casualmente in base alle probabilità definite nel file di configurazione
     # Esclude i leggendari dallo spawn normale
     def _spawn_yokai_randomly(self) -> int:
-        legendary_ids = self.getData.get_legendary_ids()
+        legendary_ids = self.getData.get_legendary_yokai_ids()
         nprob = randint(1, 100)
         cumulative = 0
         for rank, chance in self.config.get_botConfig("spawn-probabilities").items():
