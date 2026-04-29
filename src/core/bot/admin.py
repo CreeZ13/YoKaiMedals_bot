@@ -57,34 +57,38 @@ class AdminCommands:
             await update.message.reply_text("🚫 Non sei autorizzato.", do_quote=True)
             return  
         if len(context.args) < 2:
-            await update.message.reply_text("Usage: /updatekai @username amount", do_quote=True)
+            await update.message.reply_text("Usage: /updatekai @username (or id) amount", do_quote=True)
             return
 
+        # Controlla se il destinatario e' esprtesso tramite @username o id
+        recipient = context.args[0]
+        if recipient.startswith("@"):
+            recipient = self.getData.get_user_id_from_username(recipient.lstrip("@"))
+            
         try:
-            username = context.args[0].lstrip("@")
-            kai_amount = int(context.args[1])
-            recipient_id = self.getData.get_user_id_from_username(username)
-            if not recipient_id:
+            kai_amount = int(context.args[1])    
+            if not recipient:
                 await update.message.reply_text("❌ Utente non trovato.", do_quote=True)
                 return
             
             # Check record items destinatario
-            user_has_items_record = self.checkData.check_user_has_items(recipient_id, self.chat_id)
+            user_has_items_record = self.checkData.check_user_has_items(recipient, self.chat_id)
             if not user_has_items_record:
-                self.writeData.add_items(recipient_id, self.chat_id, 0)
+                self.writeData.add_items(recipient, self.chat_id, 0)
             
             # Aggiungi Kai
-            self.updateData.update_kai(recipient_id, self.chat_id, kai_amount)
+            self.updateData.update_kai(recipient, self.chat_id, kai_amount)
         except Exception:
             print(Exception)
         
         # Comunica in chat e LOGGA l'azione
-        action = f"Numero Kai Variato -> {kai_amount} Kai a @{username}"
+        recipient_fullname = self.getData.get_user_info(recipient)["user_fullname"]
+        action = f"Numero Kai Variato -> {kai_amount} Kai a {recipient_fullname}"
         self._log_admin_action(chat_id=self.chat_id,
                                user_id=self.user_id,
                                action=action)
         await update.message.reply_text(
-            f"✅ Update Kai di: {kai_amount} Kai a @{username}", 
+            f"✅ Update Kai di: {kai_amount} Kai a {recipient_fullname}", 
             parse_mode=ParseMode.HTML
         )
 
@@ -96,14 +100,17 @@ class AdminCommands:
             await update.message.reply_text("🚫 Non sei autorizzato.", do_quote=True)
             return
         if len(context.args) < 2:
-            await update.message.reply_text("Usage: /addyokai @username NomeYokai", do_quote=True)
+            await update.message.reply_text("Usage: /addyokai @username (or id) NomeYokai", do_quote=True)
             return
 
+        # Controlla se il destinatario e' esprtesso tramite @username o id
+        recipient = context.args[0]
+        if recipient.startswith("@"):
+            recipient = self.getData.get_user_id_from_username(recipient.lstrip("@"))
+
         try:
-            username = context.args[0].lstrip("@")
             yokai_name = " ".join(context.args[1:]).lower()  # prende tutto il resto come nome
-            recipient_id = self.getData.get_user_id_from_username(username)
-            if not recipient_id:
+            if not recipient:
                 await update.message.reply_text("❌ Utente non trovato.", do_quote=True)
                 return
 
@@ -114,18 +121,18 @@ class AdminCommands:
                 return
             
             # Aggiungi lo yokai al destinatario
-            self.writeData.add_yokai_to_user(recipient_id, self.chat_id, yokai_id)
-
+            self.writeData.add_yokai_to_user(recipient, self.chat_id, yokai_id)
         except Exception:
             return
 
         # Comunica in chat e LOGGA l'azione
-        action = f"Yokai Aggiunto -> {yokai_name} (id {yokai_id}) a @{username}"
+        recipient_fullname = self.getData.get_user_info(recipient)["user_fullname"]
+        action = f"Yokai Aggiunto -> {yokai_name} (id {yokai_id}) a {recipient_fullname}"
         self._log_admin_action(chat_id=self.chat_id,
                                user_id=self.user_id,
                                action=action)
         await update.message.reply_text(
-            f"✅ Aggiunto Yo-kai <b>{yokai_name.capitalize()}</b> a @{username}", 
+            f"✅ Aggiunto Yo-kai <b>{yokai_name.capitalize()}</b> a {recipient_fullname}", 
             parse_mode=ParseMode.HTML
         )  
 
@@ -137,14 +144,17 @@ class AdminCommands:
             await update.message.reply_text("🚫 Non sei autorizzato.", do_quote=True)
             return
         if len(context.args) < 2:
-            await update.message.reply_text("Usage: /delyokai @username NomeYokai", do_quote=True)
+            await update.message.reply_text("Usage: /delyokai @username (or id) NomeYokai", do_quote=True)
             return
 
+        # Controlla se il destinatario e' esprtesso tramite @username o id
+        recipient = context.args[0]
+        if recipient.startswith("@"):
+            recipient = self.getData.get_user_id_from_username(recipient.lstrip("@"))
+
         try:
-            username = context.args[0].lstrip("@")
             yokai_name = " ".join(context.args[1:]).lower()  # prende tutto il resto come nome
-            recipient_id = self.getData.get_user_id_from_username(username)
-            if not recipient_id:
+            if not recipient:
                 await update.message.reply_text("❌ Utente non trovato.", do_quote=True)
                 return
 
@@ -155,24 +165,24 @@ class AdminCommands:
                 return
             
             # Controlla se lo yokai e' posseduto dal destinatario
-            owned_yokai_ids = self.getData.get_yokai_ids_collected(recipient_id, self.chat_id)
+            owned_yokai_ids = self.getData.get_yokai_ids_collected(recipient, self.chat_id)
             if yokai_id not in owned_yokai_ids: 
                 await update.message.reply_text("❌ Il destinatario non possiede lo yokai.", do_quote=True)
                 return
 
             # Rimuovi lo yokai al destinatario
-            self.writeData.remove_yokai_from_user(recipient_id, self.chat_id, yokai_id)
-
+            self.writeData.remove_yokai_from_user(recipient, self.chat_id, yokai_id)
         except Exception:
             return
 
         # Comunica in chat e LOGGA l'azione
-        action = f"Yokai Rimosso -> {yokai_name} (id {yokai_id}) a @{username}"
+        recipient_fullname = self.getData.get_user_info(recipient)["user_fullname"]
+        action = f"Yokai Rimosso -> {yokai_name} (id {yokai_id}) a {recipient_fullname}"
         self._log_admin_action(chat_id=self.chat_id,
                                user_id=self.user_id,
                                action=action)
         await update.message.reply_text(
-            f"✅ Rimosso Yo-kai <b>{yokai_name.capitalize()}</b> a @{username}", 
+            f"✅ Rimosso Yo-kai <b>{yokai_name.capitalize()}</b> a {recipient_fullname}", 
             parse_mode=ParseMode.HTML
         )  
 

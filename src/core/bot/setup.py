@@ -46,7 +46,7 @@ class BotManager:
         self.application.add_handler(CommandHandler(("seals", "sigilli"), seals_cmd.seals))
 
         # Comandi per gli operatori speciali (ykwi)
-        self.application.add_handler(CommandHandler("addkai", admin_cmds.updatekai))
+        self.application.add_handler(CommandHandler("updatekai", admin_cmds.updatekai))
         self.application.add_handler(CommandHandler("addyokai", admin_cmds.addyokai))
         self.application.add_handler(CommandHandler("delyokai", admin_cmds.delyokai))
         self.application.add_handler(CommandHandler("annuncia", admin_cmds.annuncia))
